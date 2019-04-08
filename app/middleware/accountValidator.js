@@ -1,14 +1,7 @@
 /* eslint-disable require-jsdoc */
 
 export default class Validators {
-  /**
-         *
-         * @param {*} req
-         * @param {*} res
-         * @param {*} next
-         * @param {*} json
-         * @param {*} message
-         */
+  
 
   static acctValidation(req, res, next) {
     const {

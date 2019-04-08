@@ -33,14 +33,7 @@ export default class StaffController {
     });
   }
 
-
-  /**
-   * deleteAccount()
-   * @desc deletes a user account
-   * @param {*} req
-   * @param {*} res
-   * @returns {object} deletedAccount
-   */
+  
   static deleteAccount(req, res) {
     const { isAdmin } = req.decoded;
     const { accountNumber } = req.params;
@@ -127,5 +120,68 @@ export default class StaffController {
     });
   }
 
-  
+  static debitAccount(req, res) {
+    const { firstname, type: usertype } = req.decoded;
+    const { accountNumber } = req.params;
+    const createdOn = new Date();
+    const { type, amount } = req.body;
+    let oldBalance = '';
+    let newBalance = '';
+    let transaction = {};
+
+    if (usertype.toLowerCase() !== 'staff') {
+      return res.status(409).json({
+        status: 409,
+        message: 'you must be a staff to perform this task',
+      });
+    }
+
+    const acctExist = accountDb
+      .find(account => account.accountNumber.toString() === accountNumber.toString());
+
+    if (!acctExist) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Account not found',
+      });
+    }
+
+    const transactionExist = transactionDb
+      .find(trans => trans.accountNumber.toString() === accountNumber.toString());
+
+    if (!transactionExist) {
+      const { openingBalance } = acctExist;
+      oldBalance = openingBalance;
+      transaction = {
+        createdOn,
+        type,
+        amount,
+        accountNumber,
+        cashier: firstname,
+        oldBalance,
+        newBalance: (+oldBalance) - (+amount),
+      };
+      transactionDb.push(transaction);
+
+      return res.status(201).json({
+        status: 201,
+        message: `your account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
+        data: transaction,
+      });
+    }
+    oldBalance = transactionExist.newBalance;
+    newBalance = (+oldBalance) - (+amount);
+    transaction = { ...transactionExist, oldBalance, newBalance };
+    transactionDb.forEach((trans, index, object) => {
+      if (trans.accountNumber.toString() === accountNumber.toString()) {
+        object.splice(index, 1);
+      }
+    });
+    transactionDb.push(transaction);
+    return res.status(201).json({
+      status: 201,
+      message: `your account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
+      data: transaction,
+    });
+  }
 }
