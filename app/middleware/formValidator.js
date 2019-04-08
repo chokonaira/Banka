@@ -1,15 +1,7 @@
 /* eslint-disable require-jsdoc */
 
 export default class Validator {
-  /**
-       *
-       * @param {*} req
-       * @param {*} res
-       * @param {*} next
-       * @param {*} json
-       * @param {*} message
-       */
-
+  
 
   static userValidation(req, res, next) {
     const {
