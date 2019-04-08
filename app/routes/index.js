@@ -9,6 +9,9 @@ const { createUser, userLogin } = UserController;
 
 // client routes
 router.post('/auth/signup', userValidation, createUser);
+router.post('/auth/login', loginValidation, userLogin);
+
+
 
 
 
