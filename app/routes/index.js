@@ -16,7 +16,7 @@ const { createAccount } = AccountController;
 const { userValidation, loginValidation } = Validator;
 const { acctValidation } = AccountValidator;
 const {
-  ActivatOrDeactivateAccct
+  ActivatOrDeactivateAccct, deleteAccount, creditAccount
 } = StaffController;
 
 
@@ -28,6 +28,9 @@ router.post('/accounts', acctValidation, Verifyuser, createAccount);
 // Admin routes
 router.patch('/accounts/:accountNumber', Verifyuser, ActivatOrDeactivateAccct);
 router.delete('/accounts/:accountNumber', Verifyuser, deleteAccount);
+
+// cashier routes
+router.post('/transactions/:accountNumber/credit', Verifyuser, creditAccount);
 
 
 
