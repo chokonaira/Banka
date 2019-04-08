@@ -33,7 +33,14 @@ export default class StaffController {
     });
   }
 
-  
+
+  /**
+   * deleteAccount()
+   * @desc deletes a user account
+   * @param {*} req
+   * @param {*} res
+   * @returns {object} deletedAccount
+   */
   static deleteAccount(req, res) {
     const { isAdmin } = req.decoded;
     const { accountNumber } = req.params;
