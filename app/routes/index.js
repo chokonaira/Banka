@@ -27,6 +27,7 @@ router.post('/accounts', acctValidation, Verifyuser, createAccount);
 
 // Admin routes
 router.patch('/accounts/:accountNumber', Verifyuser, ActivatOrDeactivateAccct);
+router.delete('/accounts/:accountNumber', Verifyuser, deleteAccount);
 
 
 
