@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import userDb from '../db/user';
-import UserFieldRequired, { loginFieldRequiredValidation } from '../middleware/userValidator';
+import { loginFieldRequiredValidation } from '../middleware/userValidator';
 
 
 config();
@@ -17,7 +17,6 @@ export default class UserController {
       firstname, lastname, email, type, isAdmin,
     } = req.body;
 
-    UserFieldRequired(firstname, lastname, email, type, password, isAdmin, res);
     const isExit = userDb.find(user => user.email === email.toLowerCase());
 
     if (isExit) {
@@ -60,12 +59,13 @@ export default class UserController {
     const { password, email } = req.body;
     loginFieldRequiredValidation(email, password, res);
 
-    const User = userDb.find(user => user.email === email.toLowerCase());
+    const User = userDb
+      .find(user => user.email === email.toLowerCase() && user.password === password);
 
     if (!User) {
-      return res.status(400).json({
+      return res.status(404).json({
         status: 404,
-        message: 'user with this email does not exist',
+        message: 'user with this email and password does not exist',
       });
     }
 
@@ -75,7 +75,7 @@ export default class UserController {
     const token = jwt.sign({
       id, type, isAdmin, email, firstname, lastname,
     }, secret, { expiresIn: '10h' });
-    return res.status(201).json({
+    return res.status(200).json({
       message: `${firstname}  is successfully logged in`,
       data: {
         token,

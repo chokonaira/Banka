@@ -2,7 +2,7 @@ const userFieldRequiredValidation = (firstname, lastname, email, type, password,
   if (!firstname || !lastname || !email || !type || !password || !isAdmin) {
     return res.status(400).send({
       success: 'false',
-      message: 'field required',
+      message: 'Validation error: all fields are required',
     });
   }
   return true;
