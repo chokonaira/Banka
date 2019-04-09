@@ -24,7 +24,7 @@ export default class Validators {
           .status(400)
           .json({ message: 'status can only be letters' });
       }
-      if (openingBalance.trim() === '') {
+      if (openingBalance.toString().trim() === '') {
         return res.status(400).json({ message: 'opening balance cannot be empty' });
       }
 
@@ -33,23 +33,13 @@ export default class Validators {
           .status(400)
           .json({ message: 'type cannot be empty' });
       }
+
       if (!regex.test(type)) {
         return res
           .status(400)
           .json({ message: 'type can only be letters' });
       }
 
-
-      if (status.trim() === '') {
-        return res
-          .status(400)
-          .json({ message: 'isAdmin cannot be empty' });
-      }
-      if (!regex.test(status)) {
-        return res
-          .status(400)
-          .json({ message: 'isAdmin can only be letters' });
-      }
       next();
       return true;
     } catch (error) {

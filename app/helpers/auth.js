@@ -9,18 +9,18 @@ const secret = process.env.SECRET || 'secret';
 
 const verifyUser = (req, res, next) => {
   const BearerToken = req.headers.authorization;
-  const token = BearerToken.split(' ')[1];
-  if (!token) {
-    res.status(301).json({
+  if (!BearerToken) {
+    return res.status(401).json({
       success: false,
       message: 'authentication failed, please login',
     });
   }
 
   try {
+    const token = BearerToken.split(' ')[1];
     const decoded = jwt.verify(token, secret);
     if (!decoded) {
-      res.status(401).json({
+      return res.status(401).json({
         message: 'authentication failed',
       });
     }
@@ -31,6 +31,7 @@ const verifyUser = (req, res, next) => {
       message: 'invalid token, you are not a valid user',
     });
   }
+  return true;
 };
 
 export default verifyUser;

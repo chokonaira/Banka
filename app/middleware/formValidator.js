@@ -49,7 +49,7 @@ export default class Validator {
           .status(400)
           .json({ message: 'type can only be letters' });
       }
-      if (isAdmin.trim() === '') {
+      if (isAdmin === '') {
         return res
           .status(400)
           .json({ message: 'isAdmin cannot be empty' });
