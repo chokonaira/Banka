@@ -3,6 +3,8 @@ Banka is a light-weight core banking application that powers banking operations 
 
 [![Build Status](https://travis-ci.org/chokonaira/Banka.svg?branch=develop)](https://travis-ci.org/chokonaira/Banka)
 
+[![Coverage Status](https://coveralls.io/repos/github/chokonaira/Banka/badge.svg?branch=develop)](https://coveralls.io/github/chokonaira/Banka?branch=develop)
+
 ### UI Templates
 My UI templates can be found here: [ UI ](https://chokonaira.github.io/Banka/)
 
