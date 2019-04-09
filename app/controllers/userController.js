@@ -8,7 +8,7 @@ import UserFieldRequired, { loginFieldRequiredValidation } from '../middleware/u
 
 
 config();
-const secret = process.env.SECRET || 'superSecretKey';
+const secret = process.env.SECRET || 'secret';
 
 export default class UserController {
   static createUser(req, res) {
