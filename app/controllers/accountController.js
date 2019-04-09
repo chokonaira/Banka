@@ -14,15 +14,18 @@ export default class Account {
     const {
       type, status, openingBalance,
     } = req.body;
+
     if (!type || !status || !openingBalance) {
       return res.status(400).send({
         success: 'false',
         message: 'field required',
       });
     }
+
     const acctExist = accountDb.filter(
       acct => acct.email === email.toLowerCase(),
     );
+
     if (!acctExist.length < 1) {
       return res.status(409).json({
         message: 'account  already exist',
