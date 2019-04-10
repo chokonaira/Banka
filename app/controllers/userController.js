@@ -60,7 +60,7 @@ export default class UserController {
     loginFieldRequiredValidation(email, password, res);
 
     const User = userDb
-      .find(user => user.email === email.toLowerCase() && user.password === password);
+      .find(user => user.email === email.toLowerCase());
 
     if (!User) {
       return res.status(404).json({
