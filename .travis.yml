@@ -8,22 +8,3 @@ cache:
 after_success: npm run coverage
 
 
-# single test suite, non-parallel build.
-
-env:
-  global:
-    - CC_TEST_REPORTER_ID=4aeb211f18d3b3f2351cc67132781697932230f4c10370f35d5acaef935c949d
-language: node_js
-rvm:
-  - 2.2.0
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script:
-  - nyc --reporter=lcov --reporter=text-lcov npm test
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-
-notifications:
-  email: false
