@@ -13,7 +13,6 @@ const nonExistingUserEmail = 'john@gamil.com';
 const type = 'User';
 const password = 'password';
 const existingPassword = 'admin';
-const wrongPassword = 'wrongPassword';
 const isAdmin = false;
 
 describe('Users routes', () => {

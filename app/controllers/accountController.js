@@ -9,7 +9,7 @@ export default class Account {
     } = req.decoded;
 
     const ownerId = id;
-    const accountNumber = Math.floor(Math.random() * 10000000000);
+    const accountNumber = Math.floor(Math.random() * 1000000000);
     const date = new Date();
     const {
       type, status, openingBalance,
@@ -28,7 +28,7 @@ export default class Account {
 
     if (!acctExist.length < 1) {
       return res.status(409).json({
-        message: 'account  already exist',
+        message: 'account already exist',
       });
     }
     const data = {
