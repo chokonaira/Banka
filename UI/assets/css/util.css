@@ -546,7 +546,7 @@
 }
 .btn-group {
   border: none;
-  background-color: red;
+  background-color: ;
   padding: 20px;
   text-align: center;
   text-decoration: none;
@@ -565,10 +565,25 @@
     padding: 0;
 }
 .btn-danger {
-    background-color: #F14340;
+    background-color: red;
+}
+.btn-danger:hover {
+  background-color: #7a0000;
 }
 .btn-info {
-    background-color: #800000;
+    background-color: #7a0000; 
+}
+.btn-info:hover{
+  background-color: red;
+  transition-duration: 300ms;
+}
+#view:hover{
+  background-color: darkgreen;
+  transition-duration: 300ms;
+}
+#view {
+  background-color: #007a10;
+  margin-right: 5px;
 }
 .btn-success {
     background-color: #55A854;
@@ -613,7 +628,7 @@
     padding: 10px 0 10px 0;
     text-align: center;
     line-height: 20px;
-    background-color: #EE6860;
+    background-color: #800000;
     letter-spacing: 0.3px;
     color: aliceblue;
     border: none;
@@ -876,5 +891,4 @@ select:hover{
     select {
       width: 30vw;
     }
-}
 }

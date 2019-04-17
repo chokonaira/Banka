@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head profile="http://www.w3.org/2005/10/profile">
-	<meta charset="utf-8">
-	<title>Banka</title>
-	<meta name="description" 
+    <meta charset="utf-8">
+    <title>Banka</title>
+    <meta name="description"
         content="Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..">
-	<meta name="author" content="Henry Okonkwo">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	
-	<link rel="stylesheet" type="text/css" href="assets/css/util.css">
+    <meta name="author" content="Henry Okonkwo">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/util.css">
     <link rel="stylesheet" type="text/css" href="assets/css/dashboard.css">
 </head>
+
 <body>
     <nav class="navbar d-flex j-c-space-between a-i-center" id="nabvar">
         <div class="container d-flex j-c-space-between a-i-center py-1">
@@ -19,72 +21,92 @@
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-      
+
         </div>
     </nav>
     <aside id="sidebar__menu" class="sidebar">
-            <div class="title-page d-flex a-i-center j-c-center text-capitalize">
-               BANKA
+        <div class="title-page d-flex a-i-center j-c-center text-capitalize">
+            <a href="../index.html" class="logo">
+                <!-- <img src="#" width="50px" height="50px"> -->
+                BANKA
+            </a>
+        </div>
+        <ul class="text-capitalize">
+            <div class="d-flex flex-col j-c-center a-i-center mt-2">
+                <img src="assets/img/avatar.jpeg" class="profile-image" width="20%" height="20%">
+                <h4 class="mt-1">Hi, Admin</h3>
+                    <form>
+                        <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
+                    </form>
             </div>
-            <ul class="text-capitalize">
-                <div class="d-flex flex-col j-c-center a-i-center mt-2">
-                   <img src="assets/img/passport1.jpg" class="profile-image" width="20%" height="20%">
-                   <h4 class="mt-1">Hi, Admin</h3>
-                   <form>
-                       <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
-                   </form>
-                </div>
-                <li >
-                        <a href="admin-dashboard.html">
-                            Admin Dashboard<i class="arrow-right"></i>
-                        </a>
-                    </li>
-                
-                <li>
-                    <a href="admin-create-staff.html">
-                        Create Admin/staff<i class="arrow-right"></i>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+            <li>
+                <a href="admin-dashboard.html">
+                    Admin Dashboard<i class="arrow-right"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="admin-create-staff.html">
+                    Create staff Account<i class="arrow-right"></i>
+                </a>
+            </li>
+            <li class="active">
+                <a href="admin-create-staff.html">
+                    User Bank Record<i class="arrow-right"></i>
+                </a>
+            </li>
+        </ul>
+    </aside>
     <div class="wrap my-4" id="main">
-        
+        <!-- <a style="float: right; margin: 10px 20px 10px; background-color: #800000 " href="admin-dashboard.html" class="btn btn-success create-office text-capitalize border-r">
+                    Go back
+                </a>
+            </br> -->
+
         <div class="container">
-            
-            <div  class="card px-0 pb-2 my-2 profile">
-                    <a style="float: right" href="admin-dashboard.html" class="btn btn-success create-office text-capitalize border-r">
-                            Go back
-                        </a>
-                <hr>
+
+
+            <div class="card px-0 pb-2 my-2 profile">
+                <form>
+                    <button id="remove" type="submit" class="btn btn-danger mt-1 mb-1"
+                        onclick="if (!confirm('Are you sure you want to delete this user Account record?')) {return false}"
+                        style="float:right">Delete</button>
+                </form>
+
+                <!-- <a href="#" id="delete" data-confirm="Are you sure you want to delete this Account Record?"; style="float:right" class="btn btn-danger">
+                            Delete
+                        </a> -->
                 <div class="d-flex flex-col j-c-center a-i-center mt-2">
-                        <h1>Account Record</h1><br/><br/>
-                    <img src="assets/img/passport1.jpg"" class="profile-image" width="30%" height="30%"><br/>
-                    <p class="mt-1"><strong>Account Name: </strong>HENRY OKONKWO</p>
+                    <h1>Account Record</h1><br /><br />
+                    <img src="assets/img/avatar.jpeg"" class=" profile-image" width="30%" height="30%"><br />
+                    <p class="mt-1"><strong>Account Name: </strong>Lorem Ipsum</p>
                     <p class="mt-1"><strong>Account Number: </strong>1234567890</p>
                     <p class="mt-1"><strong>Created On: </strong>1/3/2019</p>
                     <p class="mt-1"><strong>Account Type: </strong>Savings</p>
                     <p class="mt-1"><strong>Account Status: </strong>Active</p>
-                    <p class="mt-1"><strong>Account Balance: </strong>20.000.89</p><br/> <br/> 
+                    <p class="mt-1"><strong>Account Balance: </strong>20.000.89</p><br /> <br />
                     <div class="btn-group">
-                        <button  style="width: 100px" type="button" name="button" class="btn btn-primary">
+                        <a href="#" id="view" class="btn btn-info">
                             Activate
-                        </button><br/> 
-                        <button  style="width: 100px" type="button" name="button" class="btn btn-danger">
+                        </a>
+
+                        <a href="#" class="btn btn-info"
+                            onclick="if (!confirm('Are you sure you want to deactivate this user Account record?')) {return false}">
                             Deactivate
-                        </button>
+                        </a>
                     </div>
-                </div>  
-                
-            </div>
-            
-        </div>
-                   
                 </div>
+
             </div>
-         </div>
-    </div> 
-<script src="assets/js/dashboard.js"></script>
+
+        </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="assets/js/dashboard.js"></script>
 
 </body>
-</html>
 
+</html>
