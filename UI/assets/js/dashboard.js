@@ -11,5 +11,11 @@ const logout = document.getElementById('logout');
 
 logout.addEventListener('click', (e) => {
 	e.preventDefault();
-	window.location = 'index.html';
-})
+	window.location = '../index.html';
+});
+
+
+
+
+
+

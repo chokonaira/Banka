@@ -23,11 +23,14 @@
     </nav>
     <aside id="sidebar__menu" class="sidebar">
         <div class="title-page d-flex a-i-center j-c-center text-capitalize">
-           BANKA
+                <a href="../index.html" class="logo">
+                    <!-- <img src="#" width="50px" height="50px"> -->
+                    BANKA
+                </a>
         </div>
         <ul class="text-capitalize">
             <div class="d-flex flex-col j-c-center a-i-center mt-2">
-               <img src="assets/img/passport1.jpg" class="profile-image" width="20%" height="20%">
+               <img src="assets/img/avatar.jpeg" class="profile-image" width="20%" height="20%">
                <h4 class="mt-1">Hi, Admin</h3>
                <form>
                    <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
@@ -40,7 +43,7 @@
             </li>
             <li class="active">
                 <a href="admin-create-staff.html">
-                    Create Admin/staff<i class="arrow-right"></i>
+                    Create staff account<i class="arrow-right"></i>
                 </a>
             </li>
         </ul>
@@ -48,12 +51,16 @@
     <div class="wrap my-4" id="main">
         <div class="container">
             <div class="text-capitalize d-flex j-c-space-between a-i-center my-4">
-                <h1>Create Admin/Staff User Account</h1>
+                <h1>Create Staff User Account</h1>
             </div>
             <div class="card px-0 pb-2 my-2 d-flex flex-row j-c-center a-i-center h-50">
                 <section  class="wrapper d-flex flex-col j-c-center a-i-center">
 
                     <div class="form-wrap"></br></br>
+                        <div class="form-group">
+                                <label for="phone">Created On</label>
+                                <input  style="width: 348px" type="date" name="phone" id="phone" class="form-control">
+                            </div>
                 
                             <div class="form-group">
                                 <label for="last__name">First Name</label>
@@ -69,7 +76,7 @@
                             </div>
                             
                             <div class="form-group">
-                            <label for="last__name">Type</label>
+                            <label for="last__name">Role</label>
                                 <select style="width: 348px" id="" class="form-control">
                                     <option>Select</option>
                                     <option>Admin</option>
