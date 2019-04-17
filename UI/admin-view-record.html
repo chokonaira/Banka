@@ -51,10 +51,10 @@
                 </a>
             </li>
             <li class="active">
-                    <a href="admin-create-staff.html">
-                        User Bank Record<i class="arrow-right"></i>
-                    </a>
-                </li>
+                <a href="admin-create-staff.html">
+                    User Bank Record<i class="arrow-right"></i>
+                </a>
+            </li>
         </ul>
     </aside>
     <div class="wrap my-4" id="main">
@@ -67,11 +67,13 @@
 
 
             <div class="card px-0 pb-2 my-2 profile">
-                    <form>
-                            <button id="remove" type="submit" class="btn btn-danger mt-1 mb-1" onclick="if (!confirm('Are you sure you want to delete this user Account record?')) {return false}" style="float:right">Delete</button>
-                        </form>
-            
-                    <!-- <a href="#" id="delete" data-confirm="Are you sure you want to delete this Account Record?"; style="float:right" class="btn btn-danger">
+                <form>
+                    <button id="remove" type="submit" class="btn btn-danger mt-1 mb-1"
+                        onclick="if (!confirm('Are you sure you want to delete this user Account record?')) {return false}"
+                        style="float:right">Delete</button>
+                </form>
+
+                <!-- <a href="#" id="delete" data-confirm="Are you sure you want to delete this Account Record?"; style="float:right" class="btn btn-danger">
                             Delete
                         </a> -->
                 <div class="d-flex flex-col j-c-center a-i-center mt-2">
@@ -84,14 +86,15 @@
                     <p class="mt-1"><strong>Account Status: </strong>Active</p>
                     <p class="mt-1"><strong>Account Balance: </strong>20.000.89</p><br /> <br />
                     <div class="btn-group">
-                            <a href="#" id="view" class="btn btn-info">
-                                Activate
-                            </a>
-                            
-                            <a href="#" class="btn btn-info" onclick="if (!confirm('Are you sure you want to deactivate this user Account record?')) {return false}">
-                                    Deactivate
-                                </a>
-                        </div>
+                        <a href="#" id="view" class="btn btn-info">
+                            Activate
+                        </a>
+
+                        <a href="#" class="btn btn-info"
+                            onclick="if (!confirm('Are you sure you want to deactivate this user Account record?')) {return false}">
+                            Deactivate
+                        </a>
+                    </div>
                 </div>
 
             </div>
