@@ -67,15 +67,7 @@
 
 
             <div class="card px-0 pb-2 my-2 profile">
-                <form>
-                    <button id="remove" type="submit" class="btn btn-danger mt-1 mb-1"
-                        onclick="if (!confirm('Are you sure you want to delete this user Account record?')) {return false}"
-                        style="float:right">Delete</button>
-                </form>
 
-                <!-- <a href="#" id="delete" data-confirm="Are you sure you want to delete this Account Record?"; style="float:right" class="btn btn-danger">
-                            Delete
-                        </a> -->
                 <div class="d-flex flex-col j-c-center a-i-center mt-2">
                     <h1>Account Record</h1><br /><br />
                     <img src="assets/img/avatar.jpeg"" class=" profile-image" width="30%" height="30%"><br />
@@ -90,9 +82,14 @@
                             Activate
                         </a>
 
-                        <a href="#" class="btn btn-info"
+                        <a href="#" id="view" style="background:maroon" class="btn btn-info"
                             onclick="if (!confirm('Are you sure you want to deactivate this user Account record?')) {return false}">
                             Deactivate
+                        </a>
+                        </br>
+                        <a href="#" style="background:red" class="btn btn-info"
+                            onclick="if (!confirm('Are you sure you want to delete this user Account record?')) {return false}">
+                            Delete 
                         </a>
                     </div>
                 </div>

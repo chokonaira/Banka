@@ -3,21 +3,32 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-body{
-  background: white;
+body {
+  background-image: url('../img/b6.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #800000;
   letter-spacing: 2px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(206, 7, 7);
+  font-size: 25;
+  
 }
+
 .container{
   width: 90%;
   margin: 0 auto;
   max-width: 600px;
+  
 }
+h1{
+  font-weight: bolder;
+}
+
 .active{
   display: block;
 }
@@ -59,7 +70,7 @@ header ul li:hover{
 .logo-img{
   opacity: 0.7;
   width: 80vw;
-  max-width: 600px;
+  max-width: 100%;
   margin: 20px 0;
 }
 .togglebar {
