@@ -56,7 +56,8 @@ export default class StaffController {
 
   static async getAllAccounts(req, res) {
     const user = auth.tokenBearer(req);
-    let allAccountsQuery;
+    if (user.isAdmin && user.type.toLowerCase() === 'staff') {
+      let allAccountsQuery;
       let values = [];
       if (req.query.status) {
         allAccountsQuery = 'SELECT * FROM accounts WHERE status = $1 ORDER BY createdOn DESC';
@@ -64,7 +65,8 @@ export default class StaffController {
       } else {
         allAccountsQuery = 'SELECT * FROM accounts ORDER BY createdOn DESC';
       }
-      
+
+
       try {
         const { rows } = await pool.query(allAccountsQuery, values);
         if (!rows || rows.length === 0) {
@@ -86,6 +88,38 @@ export default class StaffController {
       }
     }
     return res.status(401).send({
+      status: 401,
+      message: 'you must be a staff (Admin) to perform this task',
+    });
+  }
+
+  static async getUserAccounts(req, res) {
+    const user = auth.tokenBearer(req);
+    if (user.isAdmin && user.type.toLowerCase() === 'staff') {
+      const allAccountsQuery = 'SELECT * FROM accounts WHERE owner = (SELECT user_id FROM users WHERE email = $1)';
+
+
+      try {
+        const { rows } = await pool.query(allAccountsQuery, [req.params.userEmail]);
+        if (!rows || rows.length === 0) {
+          return res.status(404).json({
+            status: 404,
+            message: 'No account found for the selected user',
+          });
+        }
+
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+        });
+      } catch (error) {
+        return res.status(500).send({
+          status: 500,
+          error: 'Unable to get all account details!! Server Error, Please Try Again',
+        });
+      }
+    }
+    return res.status(401).json({
       status: 401,
       message: 'you must be a staff (Admin) to perform this task',
     });
@@ -123,7 +157,6 @@ export default class StaffController {
       message: 'you must be a staff (Admin) to perform this task',
     });
   }
-
 
   static async creditAccount(req, res) {
     const user = auth.tokenBearer(req);
