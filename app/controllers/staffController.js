@@ -54,6 +54,39 @@ export default class StaffController {
     });
   }
 
+  static async deleteAccount(req, res) {
+    const user = auth.tokenBearer(req);
+    if (user.isAdmin) {
+      const deleteQuery = 'DELETE FROM accounts WHERE accountNo = $1';
+
+
+      try {
+        const { rowCount } = await pool.query(deleteQuery, [req.params.accountNumber]);
+        if (rowCount === 0) {
+          return res.status(404).send({
+            status: 404,
+            data: 'Account does not exist',
+          });
+        }
+
+        return res.status(200).send({
+          status: 204,
+          message: 'Seleted account successfully deleted',
+        });
+      } catch (error) {
+        return res.status(500).send({
+          status: 500,
+          error: 'Account delete not completed!! Server Error, Please Try Again',
+          message: error.message,
+        });
+      }
+    }
+    return res.status(401).json({
+      status: 401,
+      message: 'you must be a staff (Admin) to perform this task',
+    });
+  }
+
 
   static async creditAccount(req, res) {
     const user = auth.tokenBearer(req);
