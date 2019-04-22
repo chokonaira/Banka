@@ -1,241 +1,70 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable require-jsdoc */
-import accountDb from '../db/account';
-import transactionDb from '../db/transaction';
+import pool from '../db';
+import auth from '../middleware/auth';
+
 
 export default class StaffController {
-  static ActivatOrDeactivateAccct(req, res) {
-    const { isAdmin } = req.decoded;
+  static async creditAccount(req, res) {
+    const user = auth.tokenBearer(req);
+    const { userId: cashier } = user;
     const { accountNumber } = req.params;
-    const { status } = req.body;
-    const statusOptions = ['dormant', 'active'];
-
-    if (!statusOptions.includes(status)) {
-      return res.status(401).json({
-        status: status !== 'dormant',
-        statuss: 401,
-        message: 'Invalid account status field, status should be "dormant" or "active"',
-      });
-    }
-
-    if (isAdmin !== 'true') {
-      return res.status(409).json({
-        status: 409,
-        message: 'only an admin is allow to perform this task',
-      });
-    }
-
-    const account = accountDb.find(acct => acct.accountNumber === Number(accountNumber));
-
-    if (!account) {
-      return res.status(404).json({
-        status: 404,
-        message: 'Selected account not found',
-      });
-    }
-
-    account.status = req.body.status || account.status;
-    return res.status(200).json({
-      status: 200,
-      data: {
-        accountNumber,
-        status: account.status
-      },
-    });
-  }
+    const { amount } = req.body;
+    const type = 'credit'
+    let oldBalance;
+    let row;
+    if (!user.isAdmin && user.type.toLowerCase() === 'staff') {
+      const getAccountQuery = 'SELECT * FROM  accounts WHERE accountNo = $1';
+      const getTransactionQuery = 'SELECT * FROM  transactions WHERE createdOn = (SELECT MAX(createdOn) FROM transactions WHERE accountNo = $1)';
+      const creditQuery = `INSERT INTO transactions(createdOn, type, accountNo, amount, cashier, accountBalance)  VALUES ($1, $2, $3, $4, $5, $6) 
+      RETURNING *`;
 
 
-  /**
-   * deleteAccount()
-   * @desc deletes a user account
-   * @param {*} req
-   * @param {*} res
-   * @returns {object} deletedAccount
-   */
-  static deleteAccount(req, res) {
-    const { isAdmin } = req.decoded;
-    const { accountNumber } = req.params;
-
-    if (isAdmin !== 'true') {
-      return res.status(409).json({
-        status: 409,
-        message: 'only an admin is allow to perform this task',
-      });
-    }
-
-    for (let i = 0; i < accountDb.length; i += 1) {
-      if (accountDb[i].accountNumber === Number(accountNumber)) {
-        accountDb.splice(i, 1);
+      try {
+        const { rows } = await pool.query(getTransactionQuery, [accountNumber]);
+        row = rows[0];
+        if (!row) {
+          const { rows } = await pool.query(getAccountQuery, [accountNumber]);
+          row = rows[0];
+          if (!row) {
+            return res.status(404).send({
+              status: 404,
+              data: 'Account does not exist',
+            });
+          }
+          // postgres convert camel cases to lower case, nolonger openingBalance and accountBalance
+          // but openingbalance and accountbalance
+          oldBalance = row.openingbalance;
+        } else {
+          oldBalance = row.accountbalance;
+        }
+        const accountBalance = ((+oldBalance) + (+amount)).toFixed(2)
+        const createdOn = new Date();
+        const transaction = [
+          createdOn,
+          type.trim(),
+          accountNumber,
+          amount,
+          cashier,
+          accountBalance,
+        ];
+        const response = await pool.query(creditQuery, transaction);
         return res.status(200).json({
           status: 200,
-          message: 'seleted account successfully deleted',
+          message: `The account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
+          data: [response.rows[0]],
+        });
+      } catch (error) {
+        return res.status(500).send({
+          status: 500,
+          error: 'Unable to credit account!! Server Error, Please Try Again',
         });
       }
     }
-    return res.status(404).json({ message: '404, account not found' });
-  }
-
-  static creditAccount(req, res) {
-    const { firstname, type: usertype } = req.decoded;
-    const { accountNumber } = req.params;
-    const createdOn = new Date();
-    const { type, amount } = req.body;
-
-    if (!type || !amount) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Validation error, All fields are required',
-      });
-    }
-
-    let oldBalance;
-    let transaction;
-
-    if (usertype.toLowerCase() !== 'staff') {
-      return res.status(409).json({
-        status: 409,
-        message: 'you must be a staff to perform this task',
-      });
-    }
-
-    const acctExist = accountDb
-      .find(account => account.accountNumber.toString() === accountNumber.toString());
-
-    if (!acctExist) {
-      return res.status(404).json({
-        status: 404,
-        message: 'Account not found',
-      });
-    }
-
-    const transactionExist = transactionDb
-      .find(trans => trans.accountNumber.toString() === accountNumber.toString());
-
-    if (!transactionExist) {
-      const { openingBalance } = acctExist;
-      oldBalance = openingBalance;
-      transaction = {
-        createdOn,
-        type,
-        amount,
-        accountNumber,
-        cashier: firstname,
-        oldBalance,
-        newBalance: (+oldBalance) + (+amount),
-      };
-      transactionDb.push(transaction);
-
-      return res.status(201).json({
-        status: 201,
-        message: `your account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
-        data: transaction,
-      });
-    }
-
-    oldBalance = transactionExist.newBalance;
-    const newBalance = (+oldBalance) + (+amount);
-    transaction = {
-      ...transactionExist, oldBalance, newBalance, type,
-    };
-    transactionDb.forEach((trans, index, object) => {
-      if (trans.accountNumber.toString() === accountNumber.toString()) {
-        object.splice(index, 1);
-      }
-    });
-    transactionDb.push(transaction);
-    return res.status(201).json({
-      status: 201,
-      message: `your account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
-      data: transaction,
+    return res.status(409).json({
+      status: 409,
+      message: 'you must be a staff (Cashier) to perform this task',
     });
   }
-
-  static debitAccount(req, res) {
-    const { firstname, type: usertype } = req.decoded;
-    const { accountNumber } = req.params;
-    const createdOn = new Date();
-    const { type, amount } = req.body;
-
-    if (!type || !amount) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Validation error, All fields are required',
-      });
-    }
-
-    let oldBalance = '';
-    let newBalance = '';
-    let transaction = {};
-
-    if (usertype.toLowerCase() !== 'staff') {
-      return res.status(409).json({
-        status: 409,
-        message: 'you must be a staff to perform this task',
-      });
-    }
-
-    const acctExist = accountDb
-      .find(account => account.accountNumber.toString() === accountNumber.toString());
-
-    if (!acctExist) {
-      return res.status(404).json({
-        status: 404,
-        message: 'Account not found',
-      });
-    }
-
-    const transactionExist = transactionDb
-      .find(trans => trans.accountNumber.toString() === accountNumber.toString());
-
-    if (!transactionExist) {
-      const { openingBalance } = acctExist;
-      oldBalance = openingBalance;
-
-      if (oldBalance < amount) {
-        return res.status(409).json({
-          status: 409,
-          message: 'Insufficient funds',
-        });
-      }
-
-      transaction = {
-        createdOn,
-        type,
-        amount,
-        accountNumber: parseInt(accountNumber, 10),
-        cashier: firstname,
-        oldBalance,
-        newBalance: (+oldBalance) - (+amount),
-      };
-      transactionDb.push(transaction);
-
-      return res.status(201).json({
-        status: 201,
-        message: `your account ${accountNumber} has been debited with ${amount} on ${createdOn}`,
-        data: transaction,
-      });
-    }
-    oldBalance = transactionExist.newBalance;
-
-    if (oldBalance < amount) {
-      return res.status(409).json({
-        status: 409,
-        message: 'Insufficient funds',
-      });
-    }
-
-    newBalance = (+oldBalance) - (+amount);
-    transaction = { ...transactionExist, oldBalance, newBalance };
-    transactionDb.forEach((trans, index, object) => {
-      if (trans.accountNumber.toString() === accountNumber.toString()) {
-        object.splice(index, 1);
-      }
-    });
-    transactionDb.push(transaction);
-    return res.status(201).json({
-      status: 201,
-      message: `your account ${accountNumber} has been credited with ${amount} on ${createdOn}`,
-      data: transaction,
-    });
-  }
+  
 }
