@@ -56,10 +56,15 @@ export default class StaffController {
 
   static async getAllAccounts(req, res) {
     const user = auth.tokenBearer(req);
-    if (user.isAdmin && user.type.toLowerCase() === 'staff') {
-
-      let allAccountsQuery = 'SELECT * FROM accounts ORDER BY createdOn DESC';
+    let allAccountsQuery;
       let values = [];
+      if (req.query.status) {
+        allAccountsQuery = 'SELECT * FROM accounts WHERE status = $1 ORDER BY createdOn DESC';
+        values = [req.query.status];
+      } else {
+        allAccountsQuery = 'SELECT * FROM accounts ORDER BY createdOn DESC';
+      }
+      
       try {
         const { rows } = await pool.query(allAccountsQuery, values);
         if (!rows || rows.length === 0) {
