@@ -4,6 +4,10 @@ node_js:
 cache:
   directories:
     - "node_modules"
+env:
+  - SECRET=1234567890
+  - NODE_ENV=development
+  - DATABASE_URL=postgres://wfaxdwyk:ll8eVrua7F8R0-LQvgwCD2mcqFkCqFwe@isilo.db.elephantsql.com:5432/wfaxdwyk
 
 after_success: npm run coverage
 
