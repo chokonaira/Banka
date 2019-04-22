@@ -5,6 +5,56 @@ import auth from '../middleware/auth';
 
 
 export default class StaffController {
+  static async ActivatOrDeactivateAccct(req, res) {
+    const user = auth.tokenBearer(req);
+    const { accountNumber } = req.params;
+
+    if (user.isAdmin && user.type === 'staff') {
+      const getAccountQuery = 'SELECT * FROM  accounts WHERE accountNo = $1';
+      const editQuery = `UPDATE accounts SET status=$1 WHERE accountNo=$2 
+    RETURNING *`;
+
+      const { status } = req.body;
+      const statusOptions = ['dormant', 'active'];
+      const values = [
+        status.trim(),
+        accountNumber,
+      ];
+      try {
+        const { rows } = await pool.query(getAccountQuery, [accountNumber]);
+        if (!rows[0]) {
+          return res.status(404).send({
+            status: 404,
+            error: 'Account does not exist',
+          });
+        }
+
+        if (!statusOptions.includes(status)) {
+          return res.status(409).json({
+            status: 409,
+            error: 'Invalid account status field, status should be "dormant" or "active"',
+          });
+        }
+
+        const response = await pool.query(editQuery, values);
+        return res.status(200).send({
+          status: 200,
+          data: response.rows[0],
+        });
+      } catch (error) {
+        return res.status(500).json({
+          status: status,
+          message: error.message,
+        });
+      }
+    }
+    return res.status(401).json({
+      status: 401,
+      message: 'you must be a staff (Admin) to perform this task',
+    });
+  }
+
+
   static async creditAccount(req, res) {
     const user = auth.tokenBearer(req);
     const { userId: cashier } = user;
