@@ -3,10 +3,7 @@ import helpers from '../middleware/helpers';
 // import auth from '../middleware/auth';
 
 
-config();
-const secret = process.env.SECRET || 'secret';
-
-export default class UserController {
+class UserController {
   static async createUser(req, res) {
     // hash password to be dsaved on the database
     const hashedPassword = helpers.hashPassword(req.body.password);
@@ -55,36 +52,50 @@ export default class UserController {
     }
   }
 
-  static userLogin(req, res) {
-    const { password, email } = req.body;
-    loginFieldRequiredValidation(email, password, res);
+  static async loginUser(req, res) {
+    const query = 'SELECT * FROM users WHERE email = $1';
+    try {
+      const { rows } = await pool.query(query, [req.body.email]);
+      // Check for user existance in db
+      if (!rows[0]) {
+        return res.status(400).send({
+          status: 400,
+          error: 'Invalid User Credentials',
+        });
+      }
 
-    const User = userDb
-      .find(user => user.email === email.toLowerCase());
-
-    if (!User) {
-      return res.status(404).json({
-        status: 404,
-        message: 'user with this email and password does not exist',
+      // compares the password on request with password retrieved from db and returns a Boolean
+      const comparePassword = helpers.compareHashPassword(req.body.password, rows[0].password);
+      if (!comparePassword) {
+        return res.status(400).send({
+          status: 400,
+          error: 'Invalid User Credentials',
+        });
+      }
+      // generates a token, using id, email and user isAdmin that can be used to identify the user
+      const userToken = helpers.generateToken(rows[0].user_id, rows[0].type, rows[0].isadmin,
+        rows[0].email, rows[0].firstname, rows[0].lastname);
+      return res.status(200).send({
+        status: 200,
+        message: `${rows[0].firstname}  is successfully logged in`,
+        data: 
+          {
+            token: userToken,
+            user: {
+              user_id: rows[0].user_id,
+              firstname: rows[0].firstname,
+              lastname: rows[0].lastname,
+              email: rows[0].email,
+            },
+          },
+      });
+    } catch (error) {
+      return res.status(500).send({
+        status: 500,
+        error: error.message,
       });
     }
-
-    const {
-      id, type, isAdmin, firstname, lastname,
-    } = User;
-    const token = jwt.sign({
-      id, type, isAdmin, email, firstname, lastname,
-    }, secret, { expiresIn: '10h' });
-    return res.status(200).json({
-      message: `${firstname}  is successfully logged in`,
-      data: {
-        token,
-        id: User.id,
-        firstname: User.firstname,
-        lastname: User.lastname,
-        email: User.email,
-      },
-
-    });
   }
 }
+
+export default UserController;
