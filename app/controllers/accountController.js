@@ -40,6 +40,38 @@ class Account {
     });
   }
 
+  static async getAllTransactions(req, res) {
+    const user = auth.tokenBearer(req);
+    if (!user.isAdmin && user.type.toLowerCase() === 'user') {
+      const query = 'SELECT * FROM transactions WHERE accountNo = $1';
+
+      try {
+        const { rows } = await pool.query(query, [req.params.accountNumber]);
+        // Check for user existance in db
+        if (!rows || rows.length === 0) {
+          return res.status(404).send({
+            status: 404,
+            error: 'No existing transactions for this account',
+          });
+        }
+
+        return res.status(200).send({
+          status: 200,
+          data: rows,
+        });
+      } catch (error) {
+        return res.status(500).send({
+          status: 500,
+          error: error.message,
+        });
+      }
+    } else {
+      return res.status(401).json({
+        status: 401,
+        error: 'you must be a user to perform this task',
+      });
+    }
+  }
   
 }
 
