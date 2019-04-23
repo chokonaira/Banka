@@ -9,9 +9,9 @@ chai.should();
 let userBearerToken;
 let cashierBearerToken;
 
-describe('Account', () => {
-  before('Login user to get access token', async function () {
-    this.timeout(0)
+describe('Account', function() {
+  this.timeout(0)
+  before('Login user to get access token', async() => {
     //login user
     const userRes = await chai.request(app)
       .post('/api/v1/auth/login')

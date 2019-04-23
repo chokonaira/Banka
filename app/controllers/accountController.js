@@ -9,7 +9,6 @@ class Account {
     // check the status of user ADMIN or USER
     if (!user.isAdmin && user.type.toLowerCase() === 'user') {
       const owner = user.userId;
-      console.log(user)
       const accountNo = Math.floor(Math.random() * 1000000000);
       const createdOn = new Date();
 

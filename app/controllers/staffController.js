@@ -253,7 +253,6 @@ export default class StaffController {
         } else {
           oldBalance = row.accountbalance;
         }
-        console.log(row)
 
         if (parseInt(oldBalance, 10) < parseInt(amount, 10)) {
           return res.status(409).json({
@@ -262,9 +261,6 @@ export default class StaffController {
           });
         }
 
-        console.log(oldBalance)
-        console.log(amount)
-        console.log(oldBalance - amount)
         const accountBalance = ((+oldBalance) - (+amount)).toFixed(2);
         const createdOn = new Date();
         const transaction = [
