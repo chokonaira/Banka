@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head profile="http://www.w3.org/2005/10/profile">
+  <meta charset="utf-8">
+  <title>Banka</title>
+  <meta name="description" content="Politico enables citizens give their mandate to politicians running for different government offices
+        while building trust in the process through transparency">
+  <meta name="author" content="Orie Chinedu Emmanuel">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/util.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/dashboard.css">
+</head>
+
+<body>
+  <nav class="navbar d-flex j-c-space-between a-i-center" id="nabvar">
+    <div class="container d-flex j-c-space-between a-i-center py-1">
+      <div class="btn-icon" id="dash__nav__toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+    </div>
+  </nav>
+  <aside id="sidebar__menu" class="sidebar">
+    <div class="title-page d-flex a-i-center j-c-center text-capitalize">
+      <a href="../index.html" class="logo">
+        <!-- <img src="#" width="50px" height="50px"> -->
+        BANKA
+      </a>
+    </div>
+    <ul class="text-capitalize">
+      <div class="d-flex flex-col j-c-center a-i-center mt-2">
+        <img src="assets/img/avartar2.png" class="profile-image" width="20%" height="20%">
+        <h4 class="mt-1">Hi, User</h3>
+          <form>
+            <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
+          </form>
+      </div>
+      <li class="active">
+        <a href="user-dashboard.html">
+          Account Profile<i class="arrow-right"></i>
+        </a>
+      </li>
+      <li>
+        <a href="user-create-account.html">
+          Create Bank Account<i class="arrow-right"></i>
+        </a>
+      </li>
+
+      <!-- 
+      <li>
+        <a href="user-transaction-history.html">
+          Transaction History<i class="arrow-right"></i>
+        </a>
+      </li> -->
+
+    </ul>
+  </aside>
+  <div class="wrap my-4" id="main">
+    <div class="container">
+      <div class="text-capitalize d-flex j-c-space-between a-i-center my-4">
+        <h1>Bank Account Profile</h1>
+      </div>
+      <div class="card px-0 pb-2 my-2">
+
+        <div class="container">
+          <div class="my-1 d-flex justify-content a-i-center">
+            <!-- <form class="search-form" action="" method="post">
+              <div class="input-group search">
+                <input type="text" name="" value="" placeholder="Search Account..." class="search-btn">
+                <button type="submit" class="btn btn-primary">
+                  Search
+                </button>
+              </div>
+            </form> -->
+
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Account Name</th>
+                  <th>Account No.</th>
+                  <th>Balance</th>
+                  <th>Type</th>
+                  <th>Transactions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td class="text-uppercase">Henry Okonkwo</td>
+                  <td>1111111111</td>
+                  <td>N10,000.50</td>
+                  <td> Savings Account</td>
+                  <td>
+                    <div style="padding:10px; ">
+                      <a href="user-transaction-history.html" class="btn btn-info">
+                        View
+                      </a>
+
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td class="text-uppercase">Henry Okonkwo</td>
+                  <td>1111111111</td>
+                  <td>N8,000.89</td>
+                  <td>Current Account</td>
+                  <td>
+                    <div style="padding:10px; ">
+                      <a href="user-transaction-history.html" class="btn btn-info">
+                        View
+                      </a>
+
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td class="text-uppercase">CHOKO NIG LTD</td>
+                  <td>1111111111</td>
+                  <td>N30,450.20</td>
+                  <td>
+                    Corporate Account
+                  </td>
+                  <td>
+                    <div style="padding:10px; ">
+                      <a href="user-transaction-history.html" class="btn btn-info">
+                        View
+                      </a>
+
+                    </div>
+                  </td>
+
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/dashboard.js"></script>
+
+</body>
+
+</html>
