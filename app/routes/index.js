@@ -11,7 +11,7 @@ import urlMiddleware from '../middleware/url';
 const router = express.Router();
 
 const { createUser, loginUser } = UserController;
-const { createAccount, getAllTransactions, getTransaction } = AccountController;
+const { createAccount, accountDetails, getAllTransactions, getTransaction } = AccountController;
 const {
   ActivatOrDeactivateAccct, getAllAccounts, deleteAccount, creditAccount,
   debitAccount, getUserAccounts,
@@ -23,6 +23,7 @@ const { verifyAccountNumber } = urlMiddleware;
 router.post('/auth/signup', validate(schema.userSchema), createUser);
 router.post('/auth/login', validate(schema.loginSchema), loginUser);
 router.post('/accounts', validate(schema.accountsSchema), verifyToken, createAccount);
+router.get('/accounts/:accountNumber', verifyAccountNumber, verifyToken, accountDetails);
 router.get('/accounts/:accountNumber/transactions', verifyAccountNumber, verifyToken, getAllTransactions);
 router.get('/transactions/:transactionId', verifyToken, getTransaction);
 

@@ -105,7 +105,37 @@ class Account {
       });
     }
   }
-  
+
+  static async accountDetails(req, res) {
+    const user = auth.tokenBearer(req);
+    if (!user.isAdmin && user.type.toLowerCase() === 'user') {
+      const query = 'SELECT * FROM accounts WHERE accountNo = $1';
+      try {
+        const { rows } = await pool.query(query, [req.params.accountNumber]);
+        if (!rows[0]) {
+          return res.status(404).send({
+            status: 404,
+            data: 'Account does not exist',
+          });
+        }
+
+        return res.status(200).send({
+          status: 200,
+          data: rows[0]
+        });
+      } catch (error) {
+        return res.status(500).send({
+          status: 500,
+          error: 'Server Error, Please Try Again',
+          message: error.message,
+        });
+      }
+    }
+    return res.status(401).json({
+      status: 401,
+      message: 'you must be a user to perform this task',
+    });
+  }
 }
 
 export default Account;
