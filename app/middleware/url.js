@@ -5,8 +5,8 @@ const url = {
       next();
       return null;
     }
-    return res.status(409).json({
-      status: 409,
+    return res.status(400).json({
+      status: 400,
       error: 'Invalid account number, account number must be 9 digits long'
     });
   },

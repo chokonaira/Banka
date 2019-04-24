@@ -30,8 +30,8 @@ export default class StaffController {
         }
 
         if (!statusOptions.includes(status)) {
-          return res.status(409).json({
-            status: 409,
+          return res.status(400).json({
+            status: 400,
             error: 'Invalid account status field, status should be "dormant" or "active',
           });
         }

@@ -70,7 +70,7 @@ describe('Staff routes', function () {
             res.body.error[0].should.equal('status is required');
         });
 
-        it('Should return invalid account number with status 409', async () => {
+        it('Should return invalid account number with status 400', async () => {
             const res = await chai
                 .request(app)
                 .patch(`/api/v1/accounts/${constants.invalidAccountNumber}`)
@@ -78,22 +78,22 @@ describe('Staff routes', function () {
                     status: 'dormant'
                 })
                 .set('authorization', adminBearerToken)
-            res.should.have.status(409);
+            res.should.have.status(400);
             res.body.should.have.property('error');
             res.body.error.should.equal('Invalid account number, account number must be 9 digits long');
         });
 
-        it('Should return invalid account status field with status 409', async () => {
+        it('Should return invalid account status field with status 400', async () => {
             const res = await chai
                 .request(app)
                 .patch(`/api/v1/accounts/${constants.validAcccountNumber}`)
                 .send({
-                    status: 'notactive'
+                    status: 'nottactive'
                 })
                 .set('authorization', adminBearerToken)
-            res.should.have.status(409);
+            res.should.have.status(400);
             res.body.should.have.property('error');
-            res.body.error.should.equal('Invalid account status field, status should be "dormant" or "active"');
+            res.body.error.should.equal('Invalid account status field, status should be "dormant" or "active');
         });
 
         it('Should return account does not exist with status 404', async () => {
