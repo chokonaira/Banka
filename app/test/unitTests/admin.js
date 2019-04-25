@@ -95,7 +95,7 @@ describe('Admin', function () {
       res.body.error.should.equal('Invalid account status field, status should be "dormant" or "active"');
     });
 
-    it('Should return account does not exist with status 204', async () => {
+    it('Should return account does not exist with status 404', async () => {
       const res = await chai
         .request(app)
         .patch('/api/v1/accounts/123445678')
@@ -103,9 +103,9 @@ describe('Admin', function () {
           status: 'dormant',
         })
         .set('authorization', adminBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
-      res.body.data.should.have.length(0);
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
 
     it('Should return account updated successfully with account data and status 201', async () => {
@@ -152,20 +152,21 @@ describe('Admin', function () {
         .request(app)
         .get('/api/v1/accounts?status=active')
         .set('authorization', adminBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
   });
 
   describe('get a specific user accounts', () => {
-    it('Should return no account found with status 204', async () => {
+    it('Should return no account found with status 404', async () => {
       const res = await chai
         .request(app)
         .get(`/api/v1/user/${constants.invalidEmail}/accounts`)
         .set('authorization', adminBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
-      res.body.data.should.have.length(0);
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
 
     it('Should return all the user\'s bank accounts with status 200', async () => {
@@ -173,8 +174,9 @@ describe('Admin', function () {
         .request(app)
         .get(`/api/v1/user/${constants.validEmail}/accounts`)
         .set('authorization', adminBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
   });
 });

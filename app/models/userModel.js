@@ -15,7 +15,7 @@ export default class UserModel {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({
           status: 400,
-          error: `User with '${req.body.email}' already exists`,
+          error: `User already exist`,
         });
       }
       throw error;

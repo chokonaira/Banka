@@ -23,7 +23,7 @@ export default class CashierController {
       if (newTransaction.length) {
         return res.status(200).json({
           status: 200,
-          message: `The account ${req.params.accountNumber} has been credited with ${amount} on ${createdOn}`,
+          message: `Account credited successfully`,
           data: newTransaction[0],
         });
       }
@@ -50,8 +50,8 @@ export default class CashierController {
         oldBalance = bankAccount[0].openingbalance;
       }
       if ((+oldBalance) < (+amount)) {
-        return res.status(409).json({
-          status: 409,
+        return res.status(400).json({
+          status: 400,
           message: 'Insufficient funds',
         });
       }
@@ -63,7 +63,7 @@ export default class CashierController {
       if (newTransaction.length) {
         return res.status(200).json({
           status: 200,
-          message: `The account ${req.params.accountNumber} has been credited with ${amount} on ${createdOn}`,
+          message: `Account debited successfully`,
           data: newTransaction[0],
         });
       }
@@ -71,7 +71,7 @@ export default class CashierController {
     } catch (error) {
       return res.status(500).send({
         status: 500,
-        error: 'Unable to credit account!! Server Error, Please Try Again',
+        error: 'Unable to debit account!! Server Error, Please Try Again',
       });
     }
   }

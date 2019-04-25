@@ -128,14 +128,14 @@ describe('User', function () {
       res.body.error.should.equal('invalid signature');
     });
 
-    it('Should return no tranactions for this account error with status 204', async () => {
+    it('Should return no tranactions for this account error with status 404', async () => {
       const res = await chai
         .request(app)
         .get('/api/v1/accounts/909090909/transactions')
         .set('authorization', userBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
-      res.body.data.should.have.length(0);
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
 
     it('Should return all trasactions and status 200', async () => {
@@ -160,14 +160,14 @@ describe('User', function () {
   });
 
   describe('Get a single transaction', () => {
-    it('Should return transaction does not exist error with status 204', async () => {
+    it('Should return transaction does not exist error with status 404', async () => {
       const res = await chai
         .request(app)
         .get('/api/v1/transactions/100000')
         .set('authorization', userBearerToken);
-      res.should.have.status(200);
-      res.body.should.have.property('data');
-      res.body.data.should.have.length(0);
+      res.should.have.status(404);
+      res.body.should.have.property('message');
+      res.body.message.should.equal('Account does not exist!');
     });
 
     it('Should return all trasactions and status 200', async () => {

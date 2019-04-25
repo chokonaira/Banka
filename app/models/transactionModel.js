@@ -23,9 +23,9 @@ export default class TransactionModel {
     try {
       const { rows } = await pool.query(query, values);
       if (rows.length === 0) {
-        return res.status(200).send({
-          status: 204,
-          data: [],
+        return res.status(404).send({
+          status: 404,
+          message: "Account does not exist!",
         });
       }
       return rows;
@@ -40,9 +40,9 @@ export default class TransactionModel {
     try {
       const { rows } = await pool.query(query, values);
       if (rows.length === 0) {
-        return res.status(200).send({
-          status: 204,
-          data: [],
+        return res.status(404).send({
+          status: 404,
+          message: "Account does not exist!",
         });
       }
       return rows;

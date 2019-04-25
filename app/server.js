@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.get('/*', (req, res) => {
   res.status(404).send({
     status: 404,
-    error: 'bad request, invalid route',
+    error: 'Not found',
   });
 });
 

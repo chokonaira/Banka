@@ -32,9 +32,9 @@ export default class AccountModel {
     try {
       const { rows } = await pool.query(query, values);
       if (!rows[0]) {
-        return res.status(200).send({
-          status: 204,
-          data: [],
+        return res.status(404).send({
+          status: 404,
+          message: "Account does not exist!"
         });
       }
       return rows;
@@ -49,9 +49,9 @@ export default class AccountModel {
     try {
       const { rows } = await pool.query(allAccountsQuery, values);
       if (!rows[0]) {
-        return res.status(200).send({
-          status: 204,
-          data: [],
+        return res.status(404).send({
+          status: 404,
+          message: "Account does not exist!"
         });
       }
       return rows;
@@ -68,7 +68,7 @@ export default class AccountModel {
       if (!rowCount) {
         return res.status(404).send({
           status: 404,
-          error: 'Account does not exist',
+          message: 'Account does not exist!',
         });
       }
       return rowCount;
@@ -89,9 +89,9 @@ export default class AccountModel {
     try {
       const { rows } = await pool.query(allAccountsQuery, values);
       if (!rows[0]) {
-        return res.status(200).send({
-          status: 204,
-          data: [],
+        return res.status(404).send({
+          status: 404,
+         message: "Account does not exist!"
         });
       }
       return rows;

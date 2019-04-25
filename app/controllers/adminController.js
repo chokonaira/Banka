@@ -65,7 +65,7 @@ export default class StaffController {
       const isDeleted = await accountModel.delete(req, res);
       if (isDeleted > 0) {
         return res.status(200).send({
-          status: 204,
+          status: 200,
           message: 'Seleted account successfully deleted',
         });
       }
