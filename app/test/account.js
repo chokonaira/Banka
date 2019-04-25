@@ -99,11 +99,11 @@ describe('Account', function() {
   })
 
   describe('Get all user transactions', () => {
-    it('Should return invalid account number with status 409', async () => {
+    it('Should return invalid account number with status 400', async () => {
       const res = await chai
         .request(app)
         .get(`/api/v1/accounts/${constants.invalidAccountNumber}/transactions`)
-      res.should.have.status(409);
+      res.should.have.status(400);      
       res.body.should.have.property('error');
       res.body.error.should.equal('Invalid account number, account number must be 9 digits long');
     });

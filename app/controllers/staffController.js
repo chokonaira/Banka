@@ -30,9 +30,9 @@ export default class StaffController {
         }
 
         if (!statusOptions.includes(status)) {
-          return res.status(409).json({
-            status: 409,
-            error: 'Invalid account status field, status should be "dormant" or "active"',
+          return res.status(400).json({
+            status: 400,
+            error: 'Invalid account status field, status should be "dormant" or "active',
           });
         }
 
@@ -140,7 +140,7 @@ export default class StaffController {
           });
         }
 
-        return res.status(200).send({
+        return res.status(204).send({
           status: 204,
           message: 'Seleted account successfully deleted',
         });

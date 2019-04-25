@@ -6,6 +6,8 @@ import UserController from '../controllers/userController';
 import { schema, validate } from '../middleware/schemaValidators';
 import Auth from '../middleware/auth';
 import urlMiddleware from '../middleware/url';
+import swaggerui from 'swagger-ui-express';
+import swaggerDoc from '../../swagger.json';
 
 
 const router = express.Router();
@@ -26,6 +28,7 @@ router.post('/accounts', validate(schema.accountsSchema), verifyToken, createAcc
 router.get('/accounts/:accountNumber', verifyAccountNumber, verifyToken, accountDetails);
 router.get('/accounts/:accountNumber/transactions', verifyAccountNumber, verifyToken, getAllTransactions);
 router.get('/transactions/:transactionId', verifyToken, getTransaction);
+router.use('/docs', swaggerui.serve, swaggerui.setup(swaggerDoc));
 
 // cashier routes
 router.post('/transactions/:accountNumber/credit', validate(schema.transactionsSchema), verifyAccountNumber, verifyToken, creditAccount);
