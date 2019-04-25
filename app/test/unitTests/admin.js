@@ -79,7 +79,7 @@ describe('Admin', function () {
         .set('authorization', adminBearerToken);
       res.should.have.status(400);
       res.body.should.have.property('error');
-      res.body.error.should.equal('Invalid account number, account number must be 9 digits long');
+      res.body.error.should.equal('Invalid account number');
     });
 
     it('Should return invalid account status field with status 400', async () => {
@@ -92,7 +92,7 @@ describe('Admin', function () {
         .set('authorization', adminBearerToken);
       res.should.have.status(400);
       res.body.should.have.property('error');
-      res.body.error.should.equal('Invalid account status field, status should be "dormant" or "active"');
+      res.body.error.should.equal('Account status can only be Active or Dormant');
     });
 
     it('Should return account does not exist with status 404', async () => {

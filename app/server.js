@@ -25,6 +25,12 @@ app.get('/*', (req, res) => {
     error: 'Not found',
   });
 });
+app.post('/*', (req, res) => {
+  res.status(404).send({
+    status: 404,
+    error: 'Not found',
+  });
+});
 
 
 app.listen(PORT, () => {

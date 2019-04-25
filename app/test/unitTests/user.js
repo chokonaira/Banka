@@ -106,7 +106,7 @@ describe('User', function () {
         .set('authorization', userBearerToken);
       res.should.have.status(400);
       res.body.should.have.property('error');
-      res.body.error.should.equal('Invalid account number, account number must be 9 digits long');
+      res.body.error.should.equal('Invalid account number');
     });
 
     it('Should return token not provided error with status 401', async () => {

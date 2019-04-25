@@ -9,7 +9,7 @@ class UserController {
         const {
           user_id, type, isadmin, email, firstname, lastname,
         } = user[0];
-        const userToken = helpers.generateToken(user_id, type, isadmin, email, firstname, lastname);
+        const userToken = helpers.generateToken(user_id, type, isadmin, email);
         return res.status(201).send({
           status: 201,
           data: [{

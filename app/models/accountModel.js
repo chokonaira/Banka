@@ -5,7 +5,7 @@ export default class AccountModel {
     const owner = userId;
     const status = 'active';
     const allowedTypes = ['savings', 'current'];
-    const accountNo = Math.floor(Math.random() * 1000000000);
+    const accountNo = Math.random().toString().slice(2,11);
     const createdOn = new Date();
     const { type, openingBalance } = req.body;
     const createQuery = `INSERT INTO accounts(accountNo, createdOn, owner, type, status, openingBalance)
@@ -15,7 +15,7 @@ export default class AccountModel {
     if (!allowedTypes.includes(type)) {
       return res.status(400).send({
         status: 400,
-        error: 'invalid account type, must be either "savings" or "current"',
+        error: 'invalid account type',
       });
     }
     try {
@@ -109,7 +109,7 @@ export default class AccountModel {
     if (!statusOptions.includes(status)) {
       return res.status(400).json({
         status: 400,
-        error: 'Invalid account status field, status should be "dormant" or "active"',
+        error: 'Account status can only be Active or Dormant',
       });
     }
     try {
