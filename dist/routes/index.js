@@ -1,9 +1,11 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
@@ -13,35 +15,47 @@ var _staffController = _interopRequireDefault(require("../controllers/staffContr
 
 var _userController = _interopRequireDefault(require("../controllers/userController"));
 
-var _auth = _interopRequireDefault(require("../helpers/auth"));
+var _schemaValidators = require("../middleware/schemaValidators");
 
-var _formValidator = _interopRequireDefault(require("../middleware/formValidator"));
+var _auth = _interopRequireDefault(require("../middleware/auth"));
 
-var _accountValidator = _interopRequireDefault(require("../middleware/accountValidator"));
+var _url = _interopRequireDefault(require("../middleware/url"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
-var router = _express.default.Router();
+var _swagger = _interopRequireDefault(require("../../swagger.json"));
 
-var createUser = _userController.default.createUser,
-    userLogin = _userController.default.userLogin;
-var createAccount = _accountController.default.createAccount;
-var ActivatOrDeactivateAccct = _staffController.default.ActivatOrDeactivateAccct,
-    deleteAccount = _staffController.default.deleteAccount,
-    creditAccount = _staffController.default.creditAccount,
-    debitAccount = _staffController.default.debitAccount;
-var userValidation = _formValidator.default.userValidation,
-    loginValidation = _formValidator.default.loginValidation;
-var acctValidation = _accountValidator.default.acctValidation; // client routes
+var router = _express["default"].Router();
 
-router.post('/auth/signup', userValidation, createUser);
-router.post('/auth/login', loginValidation, userLogin);
-router.post('/accounts', acctValidation, _auth.default, createAccount); // cashier routes
+var createUser = _userController["default"].createUser,
+    loginUser = _userController["default"].loginUser;
+var createAccount = _accountController["default"].createAccount,
+    accountDetails = _accountController["default"].accountDetails,
+    getAllTransactions = _accountController["default"].getAllTransactions,
+    getTransaction = _accountController["default"].getTransaction;
+var ActivatOrDeactivateAccct = _staffController["default"].ActivatOrDeactivateAccct,
+    getAllAccounts = _staffController["default"].getAllAccounts,
+    deleteAccount = _staffController["default"].deleteAccount,
+    creditAccount = _staffController["default"].creditAccount,
+    debitAccount = _staffController["default"].debitAccount,
+    getUserAccounts = _staffController["default"].getUserAccounts;
+var verifyToken = _auth["default"].verifyToken;
+var verifyAccountNumber = _url["default"].verifyAccountNumber; // client routes
 
-router.post('/transactions/:accountNumber/credit', _auth.default, creditAccount);
-router.post('/transactions/:accountNumber/debit', _auth.default, debitAccount); // admin routes
+router.post('/auth/signup', (0, _schemaValidators.validate)(_schemaValidators.schema.userSchema), createUser);
+router.post('/auth/login', (0, _schemaValidators.validate)(_schemaValidators.schema.loginSchema), loginUser);
+router.post('/accounts', (0, _schemaValidators.validate)(_schemaValidators.schema.accountsSchema), verifyToken, createAccount);
+router.get('/accounts/:accountNumber', verifyAccountNumber, verifyToken, accountDetails);
+router.get('/accounts/:accountNumber/transactions', verifyAccountNumber, verifyToken, getAllTransactions);
+router.get('/transactions/:transactionId', verifyToken, getTransaction);
+router.use('/docs', _swaggerUiExpress["default"].serve, _swaggerUiExpress["default"].setup(_swagger["default"])); // cashier routes
 
-router.patch('/accounts/:accountNumber', _auth.default, ActivatOrDeactivateAccct);
-router.delete('/accounts/:accountNumber', _auth.default, deleteAccount);
+router.post('/transactions/:accountNumber/credit', (0, _schemaValidators.validate)(_schemaValidators.schema.transactionsSchema), verifyAccountNumber, verifyToken, creditAccount);
+router.post('/transactions/:accountNumber/debit', (0, _schemaValidators.validate)(_schemaValidators.schema.transactionsSchema), verifyAccountNumber, verifyToken, debitAccount); // admin routes
+
+router.patch('/accounts/:accountNumber', (0, _schemaValidators.validate)(_schemaValidators.schema.activeDeactivateSchema), verifyAccountNumber, verifyToken, ActivatOrDeactivateAccct);
+router["delete"]('/accounts/:accountNumber', verifyAccountNumber, verifyToken, deleteAccount);
+router.get('/accounts', verifyToken, getAllAccounts);
+router.get('/user/:userEmail/accounts', verifyToken, getUserAccounts);
 var _default = router;
-exports.default = _default;
+exports["default"] = _default;

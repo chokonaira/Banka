@@ -4,11 +4,27 @@ node_js:
 cache:
   directories:
     - "node_modules"
+after_success: npm run coverage
+
+# single test suite, non-parallel build.
+
 env:
   global:
   - SECRET=1234567890
   - NODE_ENV=development
   - DATABASE_URL=postgres://wfaxdwyk:ll8eVrua7F8R0-LQvgwCD2mcqFkCqFwe@isilo.db.elephantsql.com:5432/wfaxdwyk
-
-after_success: npm run coverage
+  - CC_TEST_REPORTER_ID=d0efeda16747bbc832b888adc61ba68274c8065fdb03cddc08e3b97276145ad3
+language: node_js
+rvm:
+  - 2.2.0
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - nyc --reporter=lcov npm run test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+notifications:
+  email: false
 
