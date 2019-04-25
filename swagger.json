@@ -95,12 +95,7 @@
             "description": "network error",
             "headers": {}
           }
-        },
-        "security": [
-          {
-            "auth": []
-          }
-        ]
+        }
       }
 		},
 		"/auth/login": {
@@ -154,13 +149,7 @@
             "description": "Account not found",
             "headers": {}
           }
-        },
-        
-        "security": [
-          {
-            "auth": []
-          }
-        ]
+        }
       }
     },
     "/accounts": {

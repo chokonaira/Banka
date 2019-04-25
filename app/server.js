@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import router from './routes';
+import swaggerui from 'swagger-ui-express';
+import swaggerDoc from '../swagger.json';
 
 
 const app = express();
@@ -11,11 +13,17 @@ app.use(bodyParser.json());
 
 
 app.use('/api/v1', router);
-
+router.use('/api-docs', swaggerui.serve, swaggerui.setup(swaggerDoc));
 app.get('/', (req, res) => {
   res.status(200).send(
-    'Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..',
+    'Welcome to Banka...',
   );
+});
+app.get('/*', (req, res) => {
+  res.status(404).send({
+    status: 404,
+    error: 'bad request, invalid route',
+  });
 });
 
 

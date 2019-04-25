@@ -1,7 +1,7 @@
 import pool from './index';
 import tables from './schema';
 
-(async function () {
+(async function seed() {
     console.log('seeding database with dummy data...');
     try {
         await pool.query(tables.seed);
