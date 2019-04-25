@@ -108,7 +108,7 @@ describe('Admin', function () {
       res.body.message.should.equal('Account does not exist!');
     });
 
-    it('Should return account updated successfully with account data and status 201', async () => {
+    it('Should return account updated successfully with account data and status 200', async () => {
       const res = await chai
         .request(app)
         .patch(`/api/v1/accounts/${constants.validAcccountNumber}`)
