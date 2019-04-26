@@ -1,8 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import router from './routes';
-import swaggerui from 'swagger-ui-express';
-import swaggerDoc from './swagger';
 
 
 const app = express();
@@ -13,7 +11,6 @@ app.use(bodyParser.json());
 
 
 app.use('/api/v1', router);
-router.use('/api-docs', swaggerui.serve, swaggerui.setup(swaggerDoc));
 app.get('/', (req, res) => {
   res.status(200).send(
     'Welcome to Banka...',
