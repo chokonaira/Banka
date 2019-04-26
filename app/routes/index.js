@@ -8,7 +8,7 @@ import { schema, validate } from '../middleware/schemaValidators';
 import Auth from '../middleware/auth';
 import urlMiddleware from '../middleware/url';
 import swaggerui from 'swagger-ui-express';
-import swaggerDoc from '../../swagger.json';
+import swaggerDoc from '.././../swagger.json';
 
 
 const router = express.Router();
