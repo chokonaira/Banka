@@ -18,14 +18,14 @@ export default class TransactionModel {
   }
 
   static async getAllTransactions(req, res) {
-    const query = 'SELECT * FROM transactions WHERE accountNo = $1';
+    const query = 'SELECT * FROM transactions WHERE accountno = $1';
     const values = [req.params.accountNumber];
     try {
       const { rows } = await pool.query(query, values);
-      if (rows.length === 0) {
-        return res.status(404).send({
-          status: 404,
-          message: "Account does not exist!",
+      if (!rows[0]) {
+        return res.status(200).send({
+          status: 200,
+          message: "No transactions found",
         });
       }
       return rows;
@@ -39,15 +39,30 @@ export default class TransactionModel {
     const values = [req.params.transactionId];
     try {
       const { rows } = await pool.query(query, values);
-      if (rows.length === 0) {
-        return res.status(404).send({
-          status: 404,
-          message: "Account does not exist!",
+      if (!rows[0]) {
+        return res.status(200).send({
+          status: 200,
+          message: "No transaction found",
         });
       }
       return rows;
     } catch (error) {
       throw error;
+    }
+  }
+
+  static async isOwner(accountNumber, user) {
+    const query = 'SELECT owner FROM accounts WHERE accountno = $1'
+    const values = [accountNumber]
+    try {
+      const { rows } = await pool.query(query, values);
+      if (rows[0]) {
+        return rows[0].owner === user.userId
+      }else{
+        return false
+      }
+    } catch (error) {
+      throw error
     }
   }
 

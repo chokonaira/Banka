@@ -23,7 +23,6 @@ class Account {
       }
     }   
 
-
   static async getAllTransactions(req, res) {
     try {
       const transactions = await transactionModel.getAllTransactions(req, res);
@@ -43,15 +42,23 @@ class Account {
   }
 
   static async getTransaction(req, res) {
+    const { user} = req
     try {
       const transaction = await transactionModel.getOneTransaction(req, res);
       if (transaction.length) {
-        return res.status(200).send({
-          status: 200,
-          data: transaction[0],
-        });
+        const isOwner = transactionModel.isOwner(transaction.accountno, user)
+        if(isOwner){
+          return res.status(200).send({
+            status: 200,
+            data: transaction[0],
+          });
+        }else{
+          return res.status(200).send({
+            status: 403,
+            message: 'Access denied'
+          })
+        }
       }
-      return null;
     } catch (error) {
       return res.status(500).send({
         status: 500,

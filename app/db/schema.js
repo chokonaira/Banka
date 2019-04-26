@@ -1,8 +1,8 @@
-
 import helpers from '../middleware/helpers';
 
 const hashedPassword = helpers.hashPassword('password')
 // Database Queries defining the structure of the Database
+
 const tables = {
   usersTable: `CREATE TABLE IF NOT EXISTS
     users(
@@ -23,7 +23,8 @@ const tables = {
       owner INTEGER,
       type varchar(50),
       status varchar(50),
-      openingBalance DECIMAL NOT NULL DEFAULT 0      
+      openingBalance DECIMAL NOT NULL DEFAULT 0,
+      accountBalance DECIMAL DEFAULT 0      
     )`,
   transactionsTable: `CREATE TABLE IF NOT EXISTS
   transactions (

@@ -78,6 +78,8 @@
     "password-hash": "^1.2.2",
     "pg": "^7.10.0",
     "shortid": "^2.2.14",
-    "swagger-ui-express": "^4.0.2"
+    "swagger-jsdoc": "^3.2.9",
+    "swagger-ui-express": "^4.0.2",
+    "yamljs": "^0.3.0"
   }
 }

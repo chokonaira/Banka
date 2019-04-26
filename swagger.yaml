@@ -1,0 +1,520 @@
+---
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Banka
+  description: Banka is a light-weight core banking application that powers banking
+    operations like account creation, customer deposit and withdrawals. This app is
+    meant to support a single bank, where users can signup and create bank accounts
+    online, but must visit the branch to withdraw or deposit money..
+  termsOfService: https://github.com/chokonaira/Banka
+  contact:
+    email: okonkwo.henry2012@gmail.com
+  license:
+    name: MIT License
+    url: https://github.com/chokonaira/Banka
+host: banka101.herokuapp.com
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  "/auth/signup":
+    post:
+      description: Create a User account on Banka
+      summary: Signup
+      tags:
+      - Authentication
+      operationId: AuthSignupPost
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: firstname
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: lastname
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: email
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: type
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '201':
+          description: User successfully created
+          headers: {}
+        '400':
+          description: User with the credential already exist
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+  "/auth/login":
+    post:
+      description: Existing Users Can Login to perform API functions
+      summary: Login
+      tags:
+      - Authentication
+      operationId: AuthLoginPost
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: email
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '400':
+          description: Invalid user credentials
+          headers: {}
+        '404':
+          description: Account not found
+          headers: {}
+  "/accounts":
+    post:
+      description: User can create a banka account
+      summary: Create a Bank account
+      tags:
+      - User(Client)
+      operationId: AccountsPost
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: type
+        in: header
+        required: true
+        type: string
+        description: savings or current
+      - name: status
+        in: header
+        required: true
+        type: string
+        description: active or dormant
+      - name: openingBalance
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '201':
+          description: Bank account successfully created
+          headers: {}
+        '401':
+          description: You must be a user to perform this task
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  "/accounts/:accountNumber":
+    get:
+      description: User can view single bank account details
+      summary: View bank account details
+      tags:
+      - User(Client)
+      operationId: AccountGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: success
+          headers: {}
+        '401':
+          description: You must be a user to perform this task
+          headers: {}
+        '404':
+          description: Account does not exist
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  "/accounts/:accountNumber/transactions":
+    get:
+      description: User can view an account transaction history
+      summary: View transaction history
+      tags:
+      - User(Client)
+      operationId: TransactionGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: success
+          headers: {}
+        '401':
+          description: You must be a user to perform this task
+          headers: {}
+        '404':
+          description: Transaction does not exist
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  "/transactions/:transactionId":
+    get:
+      description: User can view all account transaction history
+      summary: View all transaction history
+      tags:
+      - User(Client)
+      operationId: TransactionsGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: success
+          headers: {}
+        '401':
+          description: You must be a user to perform this task
+          headers: {}
+        '404':
+          description: No existing transactions for this account
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  "/transactions/:accountNumber/credit":
+    patch:
+      description: Staff(cashier) can credit a user bank account
+      summary: Cashier credit account
+      tags:
+      - Staff(Cashier)
+      operationId: CashierPatch
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: float
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '404':
+          description: Account does not exist
+          headers: {}
+        '409':
+          description: You must be a staff to perform this task
+          headers: {}
+        '500':
+          description: Network error
+          headers: {}
+      security:
+      - auth: []
+  "/transactions/:accountNumber/debit":
+    patch:
+      description: Staff(cashier) can debit a user bank account
+      summary: Cashier debit account
+      tags:
+      - Staff(Cashier)
+      operationId: CashierPatch
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: float
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '404':
+          description: Account does not exist
+          headers: {}
+        '409':
+          description: You must be a staff to perform this task
+          headers: {}
+        '500':
+          description: Network error
+          headers: {}
+      security:
+      - auth: []
+  "/user/:userEmail/accounts":
+    get:
+      description: Admin can view all bank accounts accounts owned by a specific user
+      summary: view specific user Bank account
+      tags:
+      - Staff(Admin)
+      operationId: UserAccountGet
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '401':
+          description: You must be a staff(Admin) to perform this task
+          headers: {}
+        '404':
+          description: No account found for the selected user
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  get:
+    description: Admin can view a list of all bank accounts
+    summary: view all Bank account
+    tags:
+    - Staff(Admin)
+    operationId: AccountsGet
+    deprecated: false
+    produces:
+    - application/json
+    consumes:
+    - application/x-www-form-urlencoded
+    parameters:
+    - name: x-access-token
+      in: header
+      required: true
+      type: string
+      description: ''
+    responses:
+      '200':
+        description: Success
+        headers: {}
+      '401':
+        description: You must be a staff(Admin) to perform this task
+        headers: {}
+      '404':
+        description: No account found
+        headers: {}
+      '500':
+        description: network error
+        headers: {}
+    security:
+    - auth: []
+  "/accounts?status=dormant":
+    get:
+      description: Admin can view a list of all dormant bank accounts
+      summary: view all dormant Bank account
+      tags:
+      - Staff(Admin)
+      operationId: DormantAccountGet
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '401':
+          description: You must be a staff(Admin) to perform this task
+          headers: {}
+        '404':
+          description: No account found for the selected user
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  "/accounts?status=active":
+    get:
+      description: Admin can view a list of all active bank accounts
+      summary: view all active Bank account
+      tags:
+      - Staff(Admin)
+      operationId: ActiveAccountGet
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        '200':
+          description: Success
+          headers: {}
+        '401':
+          description: You must be a staff(Admin) to perform this task
+          headers: {}
+        '404':
+          description: No account found for the selected user
+          headers: {}
+        '500':
+          description: network error
+          headers: {}
+      security:
+      - auth: []
+  patch:
+    description: Staff(Admin) can activate or deactivate a user bank account
+    summary: Admin activate/deactivate account
+    tags:
+    - Staff(Admin)
+    operationId: AdminPatch
+    deprecated: false
+    produces:
+    - application/json
+    consumes:
+    - application/x-www-form-urlencoded
+    parameters:
+    - name: x-access-token
+      in: header
+      required: true
+      type: string
+      description: ''
+    - name: type
+      in: formData
+      required: true
+      type: string
+      description: ''
+    responses:
+      '200':
+        description: Success
+        headers: {}
+      '401':
+        description: you must be a staff (Admin) to perform this task
+        headers: {}
+      '404':
+        description: Account does not exist
+        headers: {}
+      '409':
+        description: Invalid account status field, status should be 'dormant' or 'active'
+        headers: {}
+      '500':
+        description: Network error
+        headers: {}
+    security:
+    - auth: []
+  delete:
+    description: Admin can Delete a single bank Account
+    summary: Delete A Bank account
+    tags:
+    - Staff(Admin)
+    operationId: AccountDelete
+    deprecated: false
+    produces:
+    - application/json
+    parameters:
+    - name: x-access-token
+      in: header
+      required: true
+      type: string
+      description: ''
+    responses:
+      '204':
+        description: success
+        headers: {}
+      '401':
+        description: you must be a staff (Admin) to perform this task
+        headers: {}
+      '404':
+        description: account does not exist
+        headers: {}
+      '500':
+        description: network error
+        headers: {}
+    security:
+    - auth: []

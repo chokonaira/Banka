@@ -133,9 +133,9 @@ describe('User', function () {
         .request(app)
         .get('/api/v1/accounts/909090909/transactions')
         .set('authorization', userBearerToken);
-      res.should.have.status(404);
+      res.should.have.status(200);
       res.body.should.have.property('message');
-      res.body.message.should.equal('Account does not exist!');
+      res.body.message.should.equal('No transactions found');
     });
 
     it('Should return all trasactions and status 200', async () => {
@@ -165,9 +165,9 @@ describe('User', function () {
         .request(app)
         .get('/api/v1/transactions/100000')
         .set('authorization', userBearerToken);
-      res.should.have.status(404);
+      res.should.have.status(200);
       res.body.should.have.property('message');
-      res.body.message.should.equal('Account does not exist!');
+      res.body.message.should.equal('No transaction found');
     });
 
     it('Should return all trasactions and status 200', async () => {

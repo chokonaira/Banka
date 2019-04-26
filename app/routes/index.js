@@ -10,6 +10,7 @@ import urlMiddleware from '../middleware/url';
 
 
 
+
 const router = express.Router();
 
 const { createUser, loginUser } = UserController;

@@ -114,5 +114,3 @@ I use [Github](http://github.com/) for version control.
 
 
 This project is a Henry and Andela bootcamp cycle-43 project 2019
-
-
