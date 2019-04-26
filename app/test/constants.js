@@ -25,7 +25,6 @@ export default {
   },
   newAccount: {
       type: 'current',
-      status: 'active',
       openingBalance: 50000,
   },
   invalidToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVkfifCJ9.eyJ1c2VySWQiOjEsInR5cGUiOiJ1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGVzdHVzZXJAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiVGVzdCIsImxhc3RuYW1lIjoiVXNlciIsImlhdCI6MTU1NTcxMDM4OCwiZXhwIjoxNTU1Nzk2Nzg4fQ.8T46DExGVFj2gux32bgVn_XBcR5RkuYZ54OQnusHKD8',

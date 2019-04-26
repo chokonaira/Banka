@@ -1,7 +1,5 @@
-// Schema - Validating user request payload
 import Joi from 'joi';
 
-// Joi Validations Schema
 const schema = {
   userSchema: Joi.object().keys({
     firstname: Joi.string().required(),
@@ -18,12 +16,11 @@ const schema = {
 
   accountsSchema: Joi.object().keys({
     type: Joi.string().required(),
-    status: Joi.string().required(),
-    openingBalance: Joi.number().required(),
+    openingBalance: Joi.number().positive().allow(0).required(),
   }),
 
   transactionsSchema: Joi.object().keys({
-    amount: Joi.number().required(),
+    amount: Joi.number().positive().allow(0).required(),
   }),
 
   activeDeactivateSchema: Joi.object().keys({

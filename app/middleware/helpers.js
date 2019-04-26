@@ -30,9 +30,9 @@ const helpers = {
  * @returns
  * token
  */
-  generateToken(userId, type, isAdmin, email, firstname, lastname) {
+  generateToken(userId, type, isAdmin, email) {
     const token = jwt.sign({
-      userId, type, isAdmin, email, firstname, lastname,
+      userId, type, isAdmin, email
     }, process.env.SECRET, { expiresIn: '24h' });
     return token;
   },

@@ -1,7 +1,7 @@
 import pool from './index';
 import tables from './schema';
 
-(async function () {
+(async function dropTables() {
   console.log('droping all tables...');
   try {
     await pool.query(tables.droptables);

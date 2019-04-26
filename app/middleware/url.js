@@ -1,13 +1,14 @@
 const url = {
   async verifyAccountNumber(req, res, next) {
     const { accountNumber } = req.params;
-    if (accountNumber.toString().length === 9) {
+    const regex = new RegExp('^[0-9]+$');
+    if (accountNumber.toString().length === 9 && regex.test(accountNumber)) {
       next();
       return null;
     }
     return res.status(400).json({
       status: 400,
-      error: 'Invalid account number, account number must be 9 digits long'
+      error: 'Invalid account number'
     });
   },
 };

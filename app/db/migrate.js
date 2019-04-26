@@ -1,7 +1,7 @@
 import pool from './index';
 import tables from './schema';
 
-(async function () {
+(async function createTables() {
   console.log('creating tables...');
   try {
     console.log('creating users table..');
