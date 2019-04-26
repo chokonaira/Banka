@@ -13,7 +13,7 @@ env:
   - SECRET=1234567890
   - NODE_ENV=development
   - DATABASE_URL=postgres://wfaxdwyk:ll8eVrua7F8R0-LQvgwCD2mcqFkCqFwe@isilo.db.elephantsql.com:5432/wfaxdwyk
-  - CC_TEST_REPORTER_ID=d0efeda16747bbc832b888adc61ba68274c8065fdb03cddc08e3b97276145ad3
+  
 language: node_js
 rvm:
   - 2.2.0
