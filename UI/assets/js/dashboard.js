@@ -1,4 +1,3 @@
-
 const dashNavToggle = document.getElementById('dash__nav__toggle');
 const sidebar = document.getElementById("sidebar__menu");
 dashNavToggle.addEventListener('click', () =>{
@@ -13,9 +12,3 @@ logout.addEventListener('click', (e) => {
 	e.preventDefault();
 	window.location = 'login.html';
 });
-
-
-
-
-
-
