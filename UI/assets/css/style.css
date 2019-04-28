@@ -4,6 +4,9 @@ body, html {
     padding: 0;
     height: 100%;
 }
+.lo {
+    text-transform: lowercase;
+  }
 
 * {
     -webkit-box-sizing: border-box;
