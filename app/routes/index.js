@@ -6,8 +6,7 @@ import CashierController from '../controllers/cashierController';
 import UserController from '../controllers/userController';
 import { schema, validate } from '../middleware/schemaValidators';
 import Auth from '../middleware/auth';
-import urlMiddleware from '../middleware/url';
-
+import urlMiddleware from '../middleware/ValidateAccountNo';
 
 
 

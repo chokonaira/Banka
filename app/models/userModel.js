@@ -1,5 +1,5 @@
 import pool from '../db';
-import helpers from '../middleware/helpers';
+import helpers from '../helpers/helpers';
 
 export default class UserModel {
   static async create(req, res) {

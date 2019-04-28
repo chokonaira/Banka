@@ -4,6 +4,7 @@ const url = {
     const regex = new RegExp('^[0-9]+$');
     if (accountNumber.toString().length === 9 && regex.test(accountNumber)) {
       next();
+      return null;
     }
     return res.status(400).json({
       status: 400,

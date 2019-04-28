@@ -1,4 +1,4 @@
-import helpers from '../middleware/helpers';
+import helpers from '../helpers/helpers';
 import userModel from '../models/userModel';
 
 class UserController {

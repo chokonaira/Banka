@@ -1,4 +1,5 @@
-import helpers from '../middleware/helpers';
+
+import helpers from '../helpers/helpers';
 
 const hashedPassword = helpers.hashPassword('password')
 // Database Queries defining the structure of the Database
