@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head profile="http://www.w3.org/2005/10/profile">
+  <meta charset="utf-8">
+  <title>Banka</title>
+  <meta name="description"
+    content="Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money..">
+  <meta name="author" content="Henry Okonkwo">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/util.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/dashboard.css">
+</head>
+
+<body>
+  <nav class="navbar d-flex j-c-space-between a-i-center" id="nabvar">
+    <div class="container d-flex j-c-space-between a-i-center py-1">
+      <div class="btn-icon" id="dash__nav__toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </nav>
+  <aside id="sidebar__menu" class="sidebar">
+    <div class="title-page d-flex a-i-center j-c-center text-capitalize">
+      <a href="../index.html" class="logo">
+        <!-- <img src="#" width="50px" height="50px"> -->
+        BANKA
+      </a>
+    </div>
+    <ul class="text-capitalize">
+      <div class="d-flex flex-col j-c-center a-i-center mt-2">
+        <img src="assets/img/avartar.png" class="profile-image" width="20%" height="20%">
+        <h4 class="mt-1">Hi, Cashier</h3>
+          <h5 class="mt-1 lo">cashier@banka.com</h5>
+          <form>
+            <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
+          </form>
+      </div>
+      <li>
+        <a href="cashier-dashoard.html">
+          Cashier Dashboard<i class="arrow-right"></i>
+        </a>
+    </li>
+    <li  class="active">
+        <a href="Cashier-view-user-account.html">
+                All Account Records<i class="arrow-right"></i>
+        </a>
+    </li>
+    
+    </ul>
+  </aside>
+  <div class="wrap my-4" id="main">
+    <div class="container">
+      <div class="text-capitalize d-flex j-c-space-between a-i-center my-4">
+        <h1>All Bank Account Records</h1>
+        <!-- <a href="cashier-dashoard.html" class="btn btn-success create-office text-capitalize border-r"
+                    style="float:right; background-color: #800000; margin-right:240px;">
+                    Cashier
+                </a> -->
+      </div>
+
+      <div class="card px-0 pb-2 my-2">
+
+        <div class="container">
+          <div class="my-1 d-flex justify-content a-i-center">
+            <form class="search-form" action="" method="post">
+              <div class="input-group search">
+                <input type="text" name="" value="" placeholder="Search Account..." class="search-btn">
+                <button type="submit" class="btn btn-primary">
+                  Search
+                </button>
+              </div>
+            </form>
+
+          </div>
+          <div class="table-container">
+            <table id="admin-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Account Name</th>
+                  <th>Account No.</th>
+                  <th>Type</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="admin-tr">
+                  <td>1</td>
+                  <a href="cashier-view profile.html">
+                    <td class="text-uppercase">Henry Okonkwo</td>
+                  </a>
+                  <td>1111111111</td>
+                  <td> Savings</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>2</td>
+                  <td class="text-uppercase">Mose Akpan</td>
+                  <td>2222222222</td>
+                  <td>Current</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        view
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>3</td>
+                  <td class="text-uppercase">Temitope Oloye</td>
+                  <td>3333333333</td>
+                  <td>
+                    Corporate
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>4</td>
+                  <td class="text-uppercase">Aliyu Madaki</td>
+                  <td>4444444444</td>
+                  <td>Current</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>4</td>
+                  <td class="text-uppercase">Chris Able</td>
+                  <td>5555555555</td>
+                  <td>Current</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>4</td>
+                  <td class="text-uppercase">Gbemisola Ade</td>
+                  <td>6666666666</td>
+                  <td>Corporate</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+                <tr class="admin-tr">
+                  <td>4</td>
+                  <td class="text-uppercase">Simon Kane</td>
+                  <td>7777777777</td>
+                  <td>Current</td>
+                  <td>
+                    <div class="btn-group">
+                      <a href="cashier-view profile.html" class="btn btn-info">
+                        View
+                      </a>
+                      <!-- <a href="admin-view-record.html" class="btn btn-info">
+                                                Deactivate
+                                            </a> -->
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="my-2 pagination-container">
+            <nav class="pagination">
+              <a href="#" class="p-item">
+                PREV
+              </a>
+              <a href="#" class="p-item active" type="button">1</a>
+              <a href="#" class="p-item">2</a>
+              <a href="#" class="p-item">3</a>
+              <a href="#" class="p-item">4</a>
+              <a href="#" class="p-item">5</a>
+              <a href="#" class="p-item">
+                NEXT
+              </a>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/dashboard.js"></script>
+
+</body>
+
+</html>
