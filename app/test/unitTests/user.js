@@ -135,7 +135,7 @@ describe('User', function () {
         .set('authorization', userBearerToken);
       res.should.have.status(200);
       res.body.should.have.property('message');
-      res.body.message.should.equal('No transactions found');
+      res.body.message.should.equal('No transaction performed yet');
     });
 
     it('Should return all trasactions and status 200', async () => {
@@ -167,7 +167,7 @@ describe('User', function () {
         .set('authorization', userBearerToken);
       res.should.have.status(200);
       res.body.should.have.property('message');
-      res.body.message.should.equal('No transaction found');
+      res.body.message.should.equal('No transaction performed yet');
     });
 
     it('Should return all trasactions and status 200', async () => {

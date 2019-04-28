@@ -45,7 +45,10 @@ const tables = {
   seed: `
   INSERT INTO
   users(firstname, lastname, email, type, password, isAdmin)
-  VALUES('Bank', 'Admin', 'admin@gmail.com', 'staff', '${hashedPassword}', 'true') ;
+  VALUES('Bank', 'Admin', 'admin@gmail.com', 'staff', '${hashedPassword}', 'true');
+  INSERT INTO
+  users(firstname, lastname, email, type, password, isAdmin)
+  VALUES('Bank', 'Cashier', 'cashier@gmail.com', 'staff', '${hashedPassword}', 'false');
   `,
   testseeds: `
     INSERT INTO
@@ -62,16 +65,25 @@ const tables = {
     RETURNING user_id, firstname, lastname, email, type, isAdmin;
     INSERT INTO 
     accounts(accountNo, owner, type, status, openingBalance)
-    VALUES (123456789, 1, 'saving', 'active', 5000);
+    VALUES (123456709, 3, 'saving', 'active', 5000);
+    INSERT INTO 
+    accounts(accountNo, owner, type, status, openingBalance)
+    VALUES (123956709, 3, 'saving', 'active', 5000);
+    INSERT INTO 
+    accounts(accountNo, owner, type, status, openingBalance)
+    VALUES (123456749, 3, 'saving', 'dormant', 5000);
+    INSERT INTO 
+    accounts(accountNo, owner, type, status, openingBalance)
+    VALUES (123456729, 3, 'saving', 'dormant', 5000);
     INSERT INTO 
     transactions(type, accountNo, amount, cashier, accountBalance)  
-    VALUES ('credit', 123456789, 5000, 2, 10000);
+    VALUES ('credit', 123456709, 5000, 2, 10000);
     INSERT INTO 
     transactions(type, accountNo, amount, cashier, accountBalance)  
-    VALUES ('debit', 123456789, 2000, 2, 8000);
+    VALUES ('debit', 123456709, 2000, 2, 8000);
     INSERT INTO 
     transactions(type, accountNo, amount, cashier, accountBalance)  
-    VALUES ('credit', 123456789, 5000, 2, 5000);
+    VALUES ('credit', 123456709, 5000, 2, 5000);
 `
 };
 

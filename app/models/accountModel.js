@@ -3,7 +3,6 @@ import pool from '../db';
 export default class AccountModel {
   static async create(req, res, userId) {
     const owner = userId;
-
     const status = (+req.body.openingBalance) > 0 ? 'active' : 'draft'
     const allowedTypes = ['savings', 'current'];
     const accountNo = Math.random().toString().slice(2, 11);
@@ -62,10 +61,10 @@ export default class AccountModel {
     const values = [req.params.userEmail];
     try {
       const { rows } = await pool.query(allAccountsQuery, values);
-      if (!rows[0]) {
-        return res.status(200).send({
-          status: 200,
-          message: ""
+      if (rows.length === 0) {
+        return res.status(404).send({
+          status: 404,
+          message: "Account does not exist!"
         });
       }
       return rows;

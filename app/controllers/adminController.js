@@ -33,6 +33,7 @@ export default class StaffController {
           data: allAccounts,
         });
       }
+      return null;
     } catch (error) {
       return res.status(500).send({
         status: 500,

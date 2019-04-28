@@ -25,7 +25,7 @@ export default class TransactionModel {
       if (!rows[0]) {
         return res.status(200).send({
           status: 200,
-          message: "No transactions found",
+          message: "No transaction performed yet",
         });
       }
       return rows;
@@ -42,7 +42,7 @@ export default class TransactionModel {
       if (!rows[0]) {
         return res.status(200).send({
           status: 200,
-          message: "No transaction found",
+          message: "No transaction performed yet",
         });
       }
       return rows;
