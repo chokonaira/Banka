@@ -34,18 +34,19 @@
             <div class="d-flex flex-col j-c-center a-i-center mt-2">
                 <img src="assets/img/avartar.png" class="profile-image" width="20%" height="20%">
                 <h4 class="mt-1">Hi, Admin</h3>
+                    <h5 class="mt-1 lo">admin@banka.com</h5>
                     <form>
                         <button type="submit" class="btn btn-info mt-1 mb-1" id="logout">Logout</button>
                     </form>
             </div>
             <li>
                 <a href="admin-dashboard.html">
-                    All Bank Records<i class="arrow-right"></i>
+                   Admin dashboard<i class="arrow-right"></i>
                 </a>
             </li>
             <li class="active">
                 <a href="admin-create-staff.html">
-                    Create staff account<i class="arrow-right"></i>
+                        Create cashier<i class="arrow-right"></i>
                 </a>
             </li>
         </ul>
@@ -53,7 +54,7 @@
     <div class="wrap my-4" id="main">
         <div class="container">
             <div class="text-capitalize d-flex j-c-space-between a-i-center my-4">
-                <h1>Create Staff User Account</h1>
+                <h1>Create Cashier Account</h1>
             </div>
             <div class="card px-0 pb-2 my-2 d-flex flex-row j-c-center a-i-center h-50">
                 <section class="wrapper d-flex flex-col j-c-center a-i-center">
@@ -66,33 +67,20 @@
 
                         <div class="form-group">
                             <label for="last__name">First Name</label>
-                            <input type="text" name="lastName" id="last__name" class="form-control">
+                            <input style="width: 348px" type="text" name="lastName" id="last__name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="other__name">Last Name</label>
-                            <input type="text" name="othertName" id="other__name" class="form-control">
+                            <input style="width: 348px" type="text" name="othertName" id="other__name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control">
+                            <input style="width: 348px" type="email" name="email" id="email" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label for="last__name">Role</label>
-                            <select style="width: 348px" id="" class="form-control">
-                                <option>Select</option>
-                                <option>Admin</option>
-                                <option>Cashier</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Passport</label>
-                            <input type="file" accept="image/jpeg,image/jpg,image/png" name="passport" id="passport"
-                                class="form-control">
-                        </div>
-                        <div class="form-group">
                             <button style="width: 348px" type="submit" class="btn-default" id="sign-up">Create
-                                account</button>
+                                Cashier</button>
                         </div>
                         </form>
                     </div>

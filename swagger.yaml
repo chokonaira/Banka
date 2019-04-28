@@ -1,4 +1,3 @@
----
 swagger: '2.0'
 info:
   version: '1.0'
@@ -7,12 +6,12 @@ info:
     operations like account creation, customer deposit and withdrawals. This app is
     meant to support a single bank, where users can signup and create bank accounts
     online, but must visit the branch to withdraw or deposit money..
-  termsOfService: https://github.com/chokonaira/Banka
-  contact:
-    email: okonkwo.henry2012@gmail.com
+  termsOfService: "https://github.com/chokonaira/Banka"
+  contact: 
+    email: "okonkwo.henry@gmail.com"
   license:
-    name: MIT License
-    url: https://github.com/chokonaira/Banka
+    name: "MIT License"
+    url: "https://github.com/chokonaira/Banka"
 host: banka101.herokuapp.com
 basePath: /
 schemes:
@@ -22,14 +21,13 @@ consumes:
 produces:
 - application/json
 paths:
-  "api/v1/auth/signup":
+  /api/v1/auth/signup:
     post:
-      description: Create a User account on Banka
-      summary: Signup
+      description: Creates a User with user access.
+      summary: User Signup
       tags:
       - No Authentication
-      operationId: AuthSignupPost
-      deprecated: false
+      operationId: ApiV1AuthSignupPost
       produces:
       - application/json
       consumes:
@@ -56,33 +54,21 @@ paths:
         type: string
         description: ''
       responses:
-        '201':
-          description: User successfully created
+        200:
+          description: ''
           headers: {}
-        '400':
-          description: User with the credential already exist
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-  "api/v1/auth/login":
+  /api/v1/auth/login:
     post:
-      description: Existing Users Can Login to perform API functions
-      summary: Login
+      description: Login an admin
+      summary: Admin login
       tags:
       - No Authentication
-      operationId: AuthLoginPost
-      deprecated: false
+      operationId: ApiV1AuthLoginPost
       produces:
       - application/json
       consumes:
       - application/x-www-form-urlencoded
       parameters:
-      - name: Content-Type
-        in: header
-        required: true
-        type: string
-        description: ''
       - name: email
         in: formData
         required: true
@@ -94,422 +80,282 @@ paths:
         type: string
         description: ''
       responses:
-        '200':
-          description: Success
+        200:
+          description: ''
           headers: {}
-        '400':
-          description: Invalid user credentials
-          headers: {}
-        '404':
-          description: Account not found
-          headers: {}
-  "api/v1/accounts":
+  /api/v1/accounts:
     post:
-      description: User can create a banka account
-      summary: Create a Bank account
+      description: Creates a Bank Account
+      summary: Create Account
       tags:
       - User(Client)
-      operationId: AccountsPost
-      deprecated: false
+      operationId: ApiV1AccountsPost
       produces:
       - application/json
       consumes:
       - application/x-www-form-urlencoded
       parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: OpeningBalance
+        in: formData
+        required: true
+        type: string
+        description: ''
       - name: type
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts/:accountNumber:
+    get:
+      description: View Account details
+      summary: Get Account
+      tags:
+      - User(Client)
+      operationId: ApiV1AccountGet
+      produces:
+      - application/json
+      parameters:
+      - name: token
         in: header
         required: true
         type: string
-        description: savings or current
+        description: ''''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts/:accountNumber/transactions:
+    get:
+      description: View an Account transaction history
+      summary: Get specific Account Transaction
+      tags:
+      - User(Client)
+      operationId: ApiV1TransactionGet
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:transactionId:
+    get:
+      description: View a specific transaction 
+      summary: Get a specific Transaction
+      tags:
+      - User(Client)
+      operationId: ApiV1TransactionGet
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:accountNumber/credit:
+    patch:
+      description: Credit a User Bank Account
+      summary: Credit an account
+      tags:
+      - Staff(Cashier)
+      operationId: ApiV1TransactionPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:accountNumber/debit:
+    patch:
+      description: Credit a User Bank Account
+      summary: Credit an account
+      tags:
+      - Staff(Cashier)
+      operationId: ApiV1TransactionPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts?status=active:
+    get:
+      description: Activate or Deactivate a User Bank Account
+      summary: Activate or Deactivate an account
+      tags:
+      - Admin/Staff
+      operationId: ApiV1AccountPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
       - name: status
-        in: header
-        required: true
-        type: string
-        description: active or dormant
-      - name: openingBalance
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '201':
-          description: Bank account successfully created
-          headers: {}
-        '401':
-          description: You must be a user to perform this task
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/accounts/:accountNumber":
-    get:
-      description: User can view single bank account details
-      summary: View bank account details
-      tags:
-      - User(Client)
-      operationId: AccountGet
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: x-access-token
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: success
-          headers: {}
-        '401':
-          description: You must be a user to perform this task
-          headers: {}
-        '404':
-          description: Account does not exist
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/accounts/:accountNumber/transactions":
-    get:
-      description: User can view an account transaction history
-      summary: View transaction history
-      tags:
-      - User(Client)
-      operationId: TransactionGet
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: x-access-token
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: success
-          headers: {}
-        '401':
-          description: You must be a user to perform this task
-          headers: {}
-        '404':
-          description: Transaction does not exist
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/transactions/:transactionId":
-    get:
-      description: User can view all account transaction history
-      summary: View all transaction history
-      tags:
-      - User(Client)
-      operationId: TransactionsGet
-      deprecated: false
-      produces:
-      - application/json
-      parameters:
-      - name: x-access-token
-        in: header
-        required: true
-        type: string
-        description: ''
-      responses:
-        '200':
-          description: success
-          headers: {}
-        '401':
-          description: You must be a user to perform this task
-          headers: {}
-        '404':
-          description: No existing transactions for this account
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/transactions/:accountNumber/credit":
-    patch:
-      description: Staff(cashier) can credit a user bank account
-      summary: Cashier credit account
-      tags:
-      - Staff(Cashier)
-      operationId: CashierPatch
-      deprecated: false
-      produces:
-      - application/json
-      consumes:
-      - application/x-www-form-urlencoded
-      parameters:
-      - name: x-access-token
-        in: header
-        required: true
-        type: string
-        description: ''
-      - name: amount
         in: formData
         required: true
-        type: float
+        type: string
         description: ''
-      responses:
-        '200':
-          description: Success
+        responses:
+        200:
+          description: ''
           headers: {}
-        '404':
-          description: Account does not exist
-          headers: {}
-        '409':
-          description: You must be a staff to perform this task
-          headers: {}
-        '500':
-          description: Network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/transactions/:accountNumber/debit":
-    patch:
-      description: Staff(cashier) can debit a user bank account
-      summary: Cashier debit account
+  /api/v1/accounts?status=dormant:
+    get:
+      description: Activate or Deactivate a User Bank Account
+      summary: Activate or Deactivate an account
       tags:
-      - Staff(Cashier)
-      operationId: CashierPatch
-      deprecated: false
+      - Admin/Staff
+      operationId: ApiV1AccountPatch
       produces:
       - application/json
       consumes:
       - application/x-www-form-urlencoded
       parameters:
-      - name: x-access-token
+      - name: token
         in: header
         required: true
         type: string
         description: ''
-      - name: amount
+      - name: status
         in: formData
         required: true
-        type: float
+        type: string
         description: ''
-      responses:
-        '200':
-          description: Success
+        responses:
+        200:
+          description: ''
           headers: {}
-        '404':
-          description: Account does not exist
-          headers: {}
-        '409':
-          description: You must be a staff to perform this task
-          headers: {}
-        '500':
-          description: Network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/user/:userEmail/accounts":
-    get:
-      description: Admin can view all bank accounts accounts owned by a specific user
-      summary: view specific user Bank account
+  /accounts/:accountNumber:
+    delete:
+      description: Deletes a User Bank Account
+      summary: Deletes a specific Account
       tags:
-      - Staff(Admin)
-      operationId: UserAccountGet
-      deprecated: false
+      - Admin
+      operationId: ApiV1AccountDelete
       produces:
       - application/json
-      consumes:
-      - application/x-www-form-urlencoded
       parameters:
-      - name: x-access-token
+      - name: token
         in: header
         required: true
         type: string
         description: ''
       responses:
-        '200':
-          description: Success
+        200:
+          description: ''
           headers: {}
-        '401':
-          description: You must be a staff(Admin) to perform this task
-          headers: {}
-        '404':
-          description: No account found for the selected user
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  get:
-    description: Admin can view a list of all bank accounts
-    summary: view all Bank account
-    tags:
-    - Staff(Admin)
-    operationId: AccountsGet
-    deprecated: false
-    produces:
-    - application/json
-    consumes:
-    - application/x-www-form-urlencoded
-    parameters:
-    - name: x-access-token
-      in: header
-      required: true
-      type: string
-      description: ''
-    responses:
-      '200':
-        description: Success
-        headers: {}
-      '401':
-        description: You must be a staff(Admin) to perform this task
-        headers: {}
-      '404':
-        description: No account found
-        headers: {}
-      '500':
-        description: network error
-        headers: {}
-    security:
-    - auth: []
-  "api/v1/accounts?status=dormant":
+  /api/v1/accounts:
     get:
-      description: Admin can view a list of all dormant bank accounts
-      summary: view all dormant Bank account
+      description: View all Bank Accounts
+      summary: Get all Account
       tags:
-      - Staff(Admin)
-      operationId: DormantAccountGet
-      deprecated: false
+      - Admin/Staff
+      operationId: ApiV1AccountGet
       produces:
       - application/json
-      consumes:
-      - application/x-www-form-urlencoded
       parameters:
-      - name: x-access-token
+      - name: token
         in: header
         required: true
         type: string
         description: ''
       responses:
-        '200':
-          description: Success
+        200:
+          description: ''
           headers: {}
-        '401':
-          description: You must be a staff(Admin) to perform this task
-          headers: {}
-        '404':
-          description: No account found for the selected user
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  "api/v1/accounts?status=active":
+  /api/v1/user/:userEmail/accounts:
     get:
-      description: Admin can view a list of all active bank accounts
-      summary: view all active Bank account
+      description: View Accounts owned by a specific User
+      summary: Get specific Account
       tags:
-      - Staff(Admin)
-      operationId: ActiveAccountGet
-      deprecated: false
+      - Admin/Staff
+      operationId: ApiV1AccountGet
       produces:
       - application/json
-      consumes:
-      - application/x-www-form-urlencoded
       parameters:
-      - name: x-access-token
+      - name: token
         in: header
         required: true
         type: string
         description: ''
       responses:
-        '200':
-          description: Success
+        200:
+          description: ''
           headers: {}
-        '401':
-          description: You must be a staff(Admin) to perform this task
+  /:
+    get:
+      description: Gets the homepage base URL
+      summary: Base URL
+      tags:
+      - Misc
+      operationId: UnnammedEndpointGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
           headers: {}
-        '404':
-          description: No account found for the selected user
-          headers: {}
-        '500':
-          description: network error
-          headers: {}
-      security:
-      - auth: []
-  patch:
-    description: Staff(Admin) can activate or deactivate a user bank account
-    summary: Admin activate/deactivate account
-    tags:
-    - Staff(Admin)
-    operationId: AdminPatch
-    deprecated: false
-    produces:
-    - application/json
-    consumes:
-    - application/x-www-form-urlencoded
-    parameters:
-    - name: x-access-token
-      in: header
-      required: true
-      type: string
-      description: ''
-    - name: type
-      in: formData
-      required: true
-      type: string
-      description: ''
-    responses:
-      '200':
-        description: Success
-        headers: {}
-      '401':
-        description: you must be a staff (Admin) to perform this task
-        headers: {}
-      '404':
-        description: Account does not exist
-        headers: {}
-      '409':
-        description: Invalid account status field, status should be 'dormant' or 'active'
-        headers: {}
-      '500':
-        description: Network error
-        headers: {}
-    security:
-    - auth: []
-  delete:
-    description: Admin can Delete a single bank Account
-    summary: Delete A Bank account
-    tags:
-    - Staff(Admin)
-    operationId: AccountDelete
-    deprecated: false
-    produces:
-    - application/json
-    parameters:
-    - name: x-access-token
-      in: header
-      required: true
-      type: string
-      description: ''
-    responses:
-      '204':
-        description: success
-        headers: {}
-      '401':
-        description: you must be a staff (Admin) to perform this task
-        headers: {}
-      '404':
-        description: account does not exist
-        headers: {}
-      '500':
-        description: network error
-        headers: {}
-    security:
-    - auth: []
+tags:
+- name: Accounts
+  description: All Account Operations
+- name: User
+  description: All operation pertaining to a user
+- name: Transactions
+  description: Describes all transaction activities on user accounts
+- name: Misc
+  description: ''
