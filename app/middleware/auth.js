@@ -69,6 +69,21 @@ export default class AuthMiddleware {
     return null;
   }
 
+  static isStaff(req, res, next) {
+    const payload = tokenBearer(req);
+    const { type } = payload;
+    if (type.toLowerCase() === 'staff') {
+      req.user = payload;
+      next();
+    } else {
+      return res.status(401).json({
+        status: 401,
+        error: 'Access denied',
+      });
+    }
+    return null;
+  }
+
   static isUser(req, res, next) {
     const payload = tokenBearer(req);
     const { isAdmin, type } = payload;

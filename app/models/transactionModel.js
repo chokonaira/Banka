@@ -25,7 +25,7 @@ export default class TransactionModel {
       if (!rows[0]) {
         return res.status(200).send({
           status: 200,
-          message: "No transaction performed yet",
+          message: 'No transaction performed yet',
         });
       }
       return rows;
@@ -42,7 +42,7 @@ export default class TransactionModel {
       if (!rows[0]) {
         return res.status(200).send({
           status: 200,
-          message: "No transaction performed yet",
+          message: 'No transaction performed yet',
         });
       }
       return rows;
@@ -52,17 +52,16 @@ export default class TransactionModel {
   }
 
   static async isOwner(accountNumber, user) {
-    const query = 'SELECT owner FROM accounts WHERE accountno = $1'
-    const values = [accountNumber]
+    const query = 'SELECT owner FROM accounts WHERE accountno = $1';
+    const values = [accountNumber];
     try {
       const { rows } = await pool.query(query, values);
       if (rows[0]) {
-        return rows[0].owner === user.userId
-      }else{
-        return false
+        return rows[0].owner === user.userId;
       }
+      return false;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 

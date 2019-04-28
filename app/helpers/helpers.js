@@ -32,7 +32,7 @@ const helpers = {
  */
   generateToken(userId, type, isAdmin, email) {
     const token = jwt.sign({
-      userId, type, isAdmin, email
+      userId, type, isAdmin, email,
     }, process.env.SECRET, { expiresIn: '24h' });
     return token;
   },

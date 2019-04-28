@@ -66,7 +66,7 @@ describe('Admin', function () {
         .set('authorization', adminBearerToken);
       res.should.have.status(422);
       res.body.should.have.property('error');
-      res.body.error[0].should.equal('status is required');
+      res.body.error.should.equal('"status" is required');
     });
 
     it('Should return invalid account number with status 400', async () => {

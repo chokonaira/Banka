@@ -21,10 +21,10 @@ export default class CashierController {
       };
       const newTransaction = await transactionModel.create(req, data);
       if (newTransaction.length) {
-        await accountModel.update(req, accountBalance)
+        await accountModel.update(req, accountBalance);
         return res.status(200).json({
           status: 200,
-          message: `Account credited successfully`,
+          message: 'Account credited successfully',
           data: newTransaction[0],
         });
       }
@@ -61,10 +61,10 @@ export default class CashierController {
       };
       const newTransaction = await transactionModel.create(req, data);
       if (newTransaction.length) {
-        await accountModel.update(req, accountBalance)
+        await accountModel.update(req, accountBalance);
         return res.status(200).json({
           status: 200,
-          message: `Account debited successfully`,
+          message: 'Account debited successfully',
           data: newTransaction[0],
         });
       }

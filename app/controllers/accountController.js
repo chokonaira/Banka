@@ -19,9 +19,9 @@ class Account {
       return res.status(500).send({
         status: 500,
         error: 'Unable to Create Account!! Server Error, Try Again',
-        });
-      }
-    }   
+      });
+    }
+  }
 
   static async getAllTransactions(req, res) {
     try {
@@ -42,22 +42,21 @@ class Account {
   }
 
   static async getTransaction(req, res) {
-    const { user} = req
+    const { user } = req;
     try {
       const transaction = await transactionModel.getOneTransaction(req, res);
       if (transaction.length) {
-        const isOwner = transactionModel.isOwner(transaction.accountno, user)
-        if(isOwner){
+        const isOwner = transactionModel.isOwner(transaction.accountno, user);
+        if (isOwner) {
           return res.status(200).send({
             status: 200,
             data: transaction[0],
           });
-        }else{
-          return res.status(200).send({
-            status: 403,
-            message: 'Access denied'
-          })
         }
+        return res.status(200).send({
+          status: 403,
+          message: 'Access denied',
+        });
       }
     } catch (error) {
       return res.status(500).send({
