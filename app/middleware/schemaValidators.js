@@ -2,16 +2,16 @@ import Joi from 'joi';
 
 const schema = {
   userSchema: Joi.object().keys({
-    firstname: Joi.string().required(),
-    lastname: Joi.string().required(),
+    firstname: Joi.string().regex(/^[a-z]+$/, { name: 'letters only' }).max(12).required(),
+    lastname: Joi.string().regex(/^[a-z]+$/, { name: 'letters only' }).max(12).required(),
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-    password: Joi.string().min(5).required(),
-    type: Joi.string().required(),
+    password: Joi.string().regex(/\s/, { invert: true, name: 'no white spaces' }).min(5).required()
   }),
+
 
   loginSchema: Joi.object().keys({
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-    password: Joi.string().required(),
+    password: Joi.string().regex(/\s/, { invert: true, name: 'no white spaces' }).min(5).required()
   }),
 
   accountsSchema: Joi.object().keys({

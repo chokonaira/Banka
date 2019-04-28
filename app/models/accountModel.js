@@ -3,9 +3,9 @@ import pool from '../db';
 export default class AccountModel {
   static async create(req, res, userId) {
     const owner = userId;
-    const status = 'active';
+    const status = (+req.body.openingBalance) > 0 ? 'active' : 'draft'
     const allowedTypes = ['savings', 'current'];
-    const accountNo = Math.random().toString().slice(2,11);
+    const accountNo = Math.random().toString().slice(2, 11);
     const createdOn = new Date();
     const { type, openingBalance } = req.body;
     const createQuery = `INSERT INTO accounts(accountNo, createdOn, owner, type, status, openingBalance)
@@ -26,15 +26,28 @@ export default class AccountModel {
     }
   }
 
+  static async update(req, newBalance) {
+    const status = 'active'
+    const updateQuery = `UPDATE accounts SET accountbalance = $1, status = $2 WHERE accountno = $3
+                          RETURNING *`;
+    const values = [newBalance, status, req.params.accountNumber];
+    try {
+      const { rows } = await pool.query(updateQuery, values);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getAccount(req, res) {
     const query = 'SELECT * FROM accounts WHERE accountNo = $1';
     const values = [req.params.accountNumber];
     try {
       const { rows } = await pool.query(query, values);
       if (!rows[0]) {
-        return res.status(404).send({
-          status: 404,
-          message: "Account does not exist!"
+        return res.status(200).send({
+          status: 200,
+          message: "No account found"
         });
       }
       return rows;
@@ -48,7 +61,7 @@ export default class AccountModel {
     const values = [req.params.userEmail];
     try {
       const { rows } = await pool.query(allAccountsQuery, values);
-      if (!rows[0]) {
+      if (rows.length === 0) {
         return res.status(404).send({
           status: 404,
           message: "Account does not exist!"
@@ -91,7 +104,7 @@ export default class AccountModel {
       if (!rows[0]) {
         return res.status(404).send({
           status: 404,
-         message: "Account does not exist!"
+          message: "Account does not exist!"
         });
       }
       return rows;

@@ -21,13 +21,13 @@ export default class CashierController {
       };
       const newTransaction = await transactionModel.create(req, data);
       if (newTransaction.length) {
+        await accountModel.update(req, accountBalance)
         return res.status(200).json({
           status: 200,
           message: `Account credited successfully`,
           data: newTransaction[0],
         });
       }
-      return null;
     } catch (error) {
       return res.status(500).send({
         status: 500,
@@ -61,6 +61,7 @@ export default class CashierController {
       };
       const newTransaction = await transactionModel.create(req, data);
       if (newTransaction.length) {
+        await accountModel.update(req, accountBalance)
         return res.status(200).json({
           status: 200,
           message: `Account debited successfully`,

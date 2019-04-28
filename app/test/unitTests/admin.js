@@ -103,9 +103,9 @@ describe('Admin', function () {
           status: 'dormant',
         })
         .set('authorization', adminBearerToken);
-      res.should.have.status(404);
+      res.should.have.status(200);
       res.body.should.have.property('message');
-      res.body.message.should.equal('Account does not exist!');
+      res.body.message.should.equal('No account found');
     });
 
     it('Should return account updated successfully with account data and status 200', async () => {
@@ -152,9 +152,8 @@ describe('Admin', function () {
         .request(app)
         .get('/api/v1/accounts?status=active')
         .set('authorization', adminBearerToken);
-      res.should.have.status(404);
-      res.body.should.have.property('message');
-      res.body.message.should.equal('Account does not exist!');
+      res.should.have.status(200);
+      res.body.should.have.property('data');
     });
   });
 
@@ -174,9 +173,8 @@ describe('Admin', function () {
         .request(app)
         .get(`/api/v1/user/${constants.validEmail}/accounts`)
         .set('authorization', adminBearerToken);
-      res.should.have.status(404);
-      res.body.should.have.property('message');
-      res.body.message.should.equal('Account does not exist!');
+      res.should.have.status(200);
+      res.body.should.have.property('data');
     });
   });
 });

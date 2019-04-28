@@ -1,0 +1,361 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Banka
+  description: Banka is a light-weight core banking application that powers banking
+    operations like account creation, customer deposit and withdrawals. This app is
+    meant to support a single bank, where users can signup and create bank accounts
+    online, but must visit the branch to withdraw or deposit money..
+  termsOfService: "https://github.com/chokonaira/Banka"
+  contact: 
+    email: "okonkwo.henry@gmail.com"
+  license:
+    name: "MIT License"
+    url: "https://github.com/chokonaira/Banka"
+host: banka101.herokuapp.com
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /api/v1/auth/signup:
+    post:
+      description: Creates a User with user access.
+      summary: User Signup
+      tags:
+      - No Authentication
+      operationId: ApiV1AuthSignupPost
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: firstname
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: lastname
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: email
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/auth/login:
+    post:
+      description: Login an admin
+      summary: Admin login
+      tags:
+      - No Authentication
+      operationId: ApiV1AuthLoginPost
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: email
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: password
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts:
+    post:
+      description: Creates a Bank Account
+      summary: Create Account
+      tags:
+      - User(Client)
+      operationId: ApiV1AccountsPost
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: OpeningBalance
+        in: formData
+        required: true
+        type: string
+        description: ''
+      - name: type
+        in: formData
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts/:accountNumber:
+    get:
+      description: View Account details
+      summary: Get Account
+      tags:
+      - User(Client)
+      operationId: ApiV1AccountGet
+      produces:
+      - application/json
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts/:accountNumber/transactions:
+    get:
+      description: View an Account transaction history
+      summary: Get specific Account Transaction
+      tags:
+      - User(Client)
+      operationId: ApiV1TransactionGet
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:transactionId:
+    get:
+      description: View a specific transaction 
+      summary: Get a specific Transaction
+      tags:
+      - User(Client)
+      operationId: ApiV1TransactionGet
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:accountNumber/credit:
+    patch:
+      description: Credit a User Bank Account
+      summary: Credit an account
+      tags:
+      - Staff(Cashier)
+      operationId: ApiV1TransactionPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/transactions/:accountNumber/debit:
+    patch:
+      description: Credit a User Bank Account
+      summary: Credit an account
+      tags:
+      - Staff(Cashier)
+      operationId: ApiV1TransactionPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: amount
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts?status=active:
+    get:
+      description: Activate or Deactivate a User Bank Account
+      summary: Activate or Deactivate an account
+      tags:
+      - Admin/Staff
+      operationId: ApiV1AccountPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: status
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts?status=dormant:
+    get:
+      description: Activate or Deactivate a User Bank Account
+      summary: Activate or Deactivate an account
+      tags:
+      - Admin/Staff
+      operationId: ApiV1AccountPatch
+      produces:
+      - application/json
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: status
+        in: formData
+        required: true
+        type: string
+        description: ''
+        responses:
+        200:
+          description: ''
+          headers: {}
+  /accounts/:accountNumber:
+    delete:
+      description: Deletes a User Bank Account
+      summary: Deletes a specific Account
+      tags:
+      - Admin
+      operationId: ApiV1AccountDelete
+      produces:
+      - application/json
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/accounts:
+    get:
+      description: View all Bank Accounts
+      summary: Get all Account
+      tags:
+      - Admin/Staff
+      operationId: ApiV1AccountGet
+      produces:
+      - application/json
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /api/v1/user/:userEmail/accounts:
+    get:
+      description: View Accounts owned by a specific User
+      summary: Get specific Account
+      tags:
+      - Admin/Staff
+      operationId: ApiV1AccountGet
+      produces:
+      - application/json
+      parameters:
+      - name: token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /:
+    get:
+      description: Gets the homepage base URL
+      summary: Base URL
+      tags:
+      - Misc
+      operationId: UnnammedEndpointGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+tags:
+- name: Accounts
+  description: All Account Operations
+- name: User
+  description: All operation pertaining to a user
+- name: Transactions
+  description: Describes all transaction activities on user accounts
+- name: Misc
+  description: ''
