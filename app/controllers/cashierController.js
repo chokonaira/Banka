@@ -57,7 +57,7 @@ export default class CashierController {
       }
       const accountBalance = ((+oldBalance) - (+amount)).toFixed(2);
       const data = {
-        type: 'credit', amount, cashier, accountBalance, createdOn,
+        type: 'debit', amount, cashier, accountBalance, createdOn,
       };
       const newTransaction = await transactionModel.create(req, data);
       if (newTransaction.length) {
