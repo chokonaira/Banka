@@ -15,7 +15,7 @@ My Pivotal Tracker board can be found [ here ](https://www.pivotaltracker.com/n/
 My API can be found here: [ API ](https://banka101.herokuapp.com)
 
 ### API Documentation
-My Swagger API documentation can be found [ here ](https://politico2019.herokuapp.com/api-docs)
+My Swagger API documentation can be found [ here ](https://banka.herokuapp.com/api-docs)
 
 ### Key Application Features
 An admin can perform the following:
