@@ -1,7 +1,6 @@
 import accountModel from '../models/accountModel';
 
 
-
 export default class StaffController {
   static async ActivatOrDeactivateAccct(req, res) {
     try {
@@ -77,5 +76,5 @@ export default class StaffController {
         message: error.message,
       });
     }
-  } 
+  }
 }

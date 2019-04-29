@@ -3,7 +3,7 @@ import pool from '../db';
 export default class AccountModel {
   static async create(req, res, userId) {
     const owner = userId;
-    const status = (+req.body.openingBalance) > 0 ? 'active' : 'draft'
+    const status = (+req.body.openingBalance) > 0 ? 'active' : 'draft';
     const allowedTypes = ['savings', 'current'];
     const accountNo = Math.random().toString().slice(2, 11);
     const createdOn = new Date();
@@ -27,7 +27,7 @@ export default class AccountModel {
   }
 
   static async update(req, newBalance) {
-    const status = 'active'
+    const status = 'active';
     const updateQuery = `UPDATE accounts SET accountbalance = $1, status = $2 WHERE accountno = $3
                           RETURNING *`;
     const values = [newBalance, status, req.params.accountNumber];
@@ -47,7 +47,7 @@ export default class AccountModel {
       if (!rows[0]) {
         return res.status(200).send({
           status: 200,
-          message: "No account found"
+          message: 'No account found',
         });
       }
       return rows;
@@ -64,7 +64,7 @@ export default class AccountModel {
       if (rows.length === 0) {
         return res.status(404).send({
           status: 404,
-          message: "Account does not exist!"
+          message: 'Account does not exist!',
         });
       }
       return rows;
@@ -104,7 +104,7 @@ export default class AccountModel {
       if (!rows[0]) {
         return res.status(404).send({
           status: 404,
-          message: "Account does not exist!"
+          message: 'Account does not exist!',
         });
       }
       return rows;

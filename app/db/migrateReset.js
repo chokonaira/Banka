@@ -5,7 +5,6 @@ import tables from './schema';
   console.log('droping all tables...');
   try {
     await pool.query(tables.droptables);
-
   } catch (error) {
     console.log(error);
   }

@@ -8,7 +8,7 @@ const url = {
     }
     return res.status(400).json({
       status: 400,
-      error: 'Invalid account number'
+      error: 'Invalid account number',
     });
   },
 };

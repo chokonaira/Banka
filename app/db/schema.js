@@ -1,7 +1,7 @@
 
 import helpers from '../helpers/helpers';
 
-const hashedPassword = helpers.hashPassword('password')
+const hashedPassword = helpers.hashPassword('password');
 // Database Queries defining the structure of the Database
 
 const tables = {
@@ -85,7 +85,7 @@ const tables = {
     INSERT INTO 
     transactions(type, accountNo, amount, cashier, accountBalance)  
     VALUES ('credit', 123456709, 5000, 2, 5000);
-`
+`,
 };
 
 export default tables;

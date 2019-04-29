@@ -5,7 +5,7 @@ export default class UserModel {
   static async create(req, res) {
     const hashedPassword = helpers.hashPassword(req.body.password);
 
-    const type = 'user'
+    const type = 'user';
     const newUserQuery = `INSERT INTO users(firstname, lastname, email, type, password) VALUES($1, $2, $3, $4, $5) 
                           RETURNING user_id, firstname, lastname, email, type`;
     const { firstname, lastname, email } = req.body;
@@ -18,7 +18,7 @@ export default class UserModel {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({
           status: 400,
-          error: `User already exist`,
+          error: 'User already exist',
         });
       }
       throw error;
@@ -30,9 +30,9 @@ export default class UserModel {
     const values = [req.body.email];
     try {
       const { rows } = await pool.query(query, values);
-      const password = req.body.password
-      const hashedPassword = rows[0] ? rows[0].password : ''
-      const isPasswordCorrect = helpers.compareHashPassword(password, hashedPassword)
+      const { password } = req.body;
+      const hashedPassword = rows[0] ? rows[0].password : '';
+      const isPasswordCorrect = helpers.compareHashPassword(password, hashedPassword);
       if (!rows[0] || !isPasswordCorrect) {
         return res.status(404).send({
           status: 401,

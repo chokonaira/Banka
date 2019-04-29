@@ -65,7 +65,7 @@ describe('User', function () {
         .set('authorization', userBearerToken);
       res.should.have.status(422);
       res.body.should.have.property('error');
-      res.body.error[0].should.equal('type is required');
+      res.body.error.should.equal('"type" is required');
     });
 
     it('Should return account created successfully with account data and status 201', async () => {

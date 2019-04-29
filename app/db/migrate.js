@@ -12,7 +12,6 @@ import tables from './schema';
 
     console.log('creating transactions table..');
     await pool.query(tables.transactionsTable);
-
   } catch (error) {
     console.log(error);
   }
