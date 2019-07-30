@@ -20,6 +20,7 @@ describe('Admin', function () {
         password: constants.testAdmin.password,
       });
     const { token: adminToken } = adminRes.body.data;
+    console.log(adminToken, '<<<<<<<<<<<<<<<<<<<<<<<');
     adminBearerToken = `Bearer ${adminToken}`;
     // login cashier
     const cashierRes = await chai.request(app)
