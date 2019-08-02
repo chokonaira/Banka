@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/chokonaira/Banka.svg?branch=develop)](https://travis-ci.org/chokonaira/Banka)  [![Coverage Status](https://coveralls.io/repos/github/chokonaira/Banka/badge.svg)](https://coveralls.io/github/chokonaira/Banka)  [![Maintainability](https://api.codeclimate.com/v1/badges/620dd07ffb14ae57ec13/maintainability)](https://codeclimate.com/github/chokonaira/Banka/maintainability) 
+[![Build Status](https://travis-ci.org/chokonaira/Banka.svg?branch=develop)](https://travis-ci.org/chokonaira/Banka)  [![Coverage Status](https://coveralls.io/repos/github/chokonaira/Banka/badge.svg)](https://coveralls.io/github/chokonaira/Banka)  [![Maintainability](https://api.codeclimate.com/v1/badges/620dd07ffb14ae57ec13/maintainability)](https://codeclimate.com/github/chokonaira/Banka/maintainability) [![CircleCI](https://circleci.com/gh/chokonaira/Banka.svg?style=svg)](https://circleci.com/gh/chokonaira/Banka)
 
 
 # Banka
