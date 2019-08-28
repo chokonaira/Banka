@@ -40,7 +40,7 @@ router.post('/transactions/:accountNumber/debit', verifyToken, isCashier, valida
 // cashier and admin routes
 router.patch('/accounts/:accountNumber', verifyToken, isStaff, validate(schema.activeDeactivateSchema), verifyAccountNumber, ActivatOrDeactivateAccct);
 router.get('/accounts', verifyToken, isStaff, getAllAccounts);
-router.get('/user/:userEmail/accounts', verifyToken, isStaff, getUserAccounts);
+router.get('/user/:userEmail/accounts', verifyToken, getUserAccounts);
 
 // admin routes
 router.delete('/accounts/:accountNumber', verifyToken, isAdmin, verifyAccountNumber, deleteAccount);
