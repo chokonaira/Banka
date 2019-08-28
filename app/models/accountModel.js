@@ -15,7 +15,7 @@ export default class AccountModel {
     if (!allowedTypes.includes(type)) {
       return res.status(400).send({
         status: 400,
-        error: 'invalid account type',
+        error: 'invalid, account type must be savings or current',
       });
     }
     try {
