@@ -6,7 +6,7 @@ Banka is a light-weight core banking application that powers banking operations 
 
 
 ### UI Templates
-My UI templates can be found here: [ UI ](https://chokonaira.github.io/Banka/)
+My UI templates can be found here: [ UI ](https://banka--react.herokuapp.com)
 
 ### Pivotal Tracker
 My Pivotal Tracker board can be found [ here ](https://www.pivotaltracker.com/n/projects/2320730)
